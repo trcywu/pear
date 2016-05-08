@@ -14,7 +14,7 @@ var cors						= require("cors");
 mongoose.connect(config.database);
 
 // Passport
-require("./config/passport")(pasport);
+require("./config/passport")(passport);
 
 // Morgan
 app.use(morgan("dev"));
@@ -51,10 +51,17 @@ app.use(function(err, req, res, next) {
 // Cors
 app.use(cors());
 
-
 // Routes
 app.use("/api", routes);
 
+// Public directory
+app.use(express.static(__dirname + "/public"));
+
+app.get("*", function(req, res) {
+	res.sendFile(__dirname + "/public/index.html");
+});
+
+// Port
 app.listen(config.port, function() {
 	console.log("Express is running on port ", config.port);
 });
