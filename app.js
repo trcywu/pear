@@ -6,13 +6,18 @@ var methodOverride	= require("method-override");
 var bodyParser			= require("body-parser");
 var mongoose				= require("mongoose");
 var passport				= require("passport");
+var expressJWT			= require("express-jwt");
 
+// Database
 mongoose.connect(config.database);
 
+// Passport
 require("./config/passport")(pasport);
 
+// Morgan
 app.use(morgan("dev"));
 
+// Method-override
 app.use(methodOverride(function(res, req) {
 	if (req.body && typeof req.body === "object" && "_method" in req.body) {
 		var method = req.body._method;
@@ -21,8 +26,25 @@ app.use(methodOverride(function(res, req) {
 	}
 }))
 
+// Body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Express-JWT
+app.use("/api", expressJWT({ secret: config.secret })
+.unless({
+	path: [
+		{ url: "/api/login", methods: ["POST"] },
+		{ url: "/api/register", methods: ["POST"] }
+	]
+}));
+
+app.use(function(err, req, res, next) {
+	if (err.name === "UnauthorizedError") {
+		return res.status(401).json({ message: "Unauthorized request" });
+	}
+	next();
+})
 
 
 
