@@ -13,11 +13,17 @@ TemplateApp.saveTokenIfPresent = function(data) {
 	return false;
 }
 
+TemplateApp.setRequestHeader = function(xhr, settings) {
+	var token = TemplateApp.getToken();
+	if (token) return xhr.setRequestHeader("Authorization", "Bearer " + token);
+}
+
 TemplateApp.ajaxRequest(method, url, data) {
 	return $.ajax({
-		method: method,
-		url: 		"http://localhost:3000/api" + url,
-		data: 	data
+		method: 		method,
+		url: 				"http://localhost:3000/api" + url,
+		data: 			data,
+		beforeSend: this.setRequestHeader
 	}).done(function(data) {
 		console.log(data);
 		return TemplateApp.saveTokenIfPresent(data);
