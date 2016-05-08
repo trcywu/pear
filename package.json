@@ -1,0 +1,27 @@
+{
+  "name": "wdi-project-3",
+  "version": "1.0.0",
+  "description": "WDI Group Project Chanse Campbell Tracy Wu  Chris Allen",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trcywu/wdi-project-3.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trcywu/wdi-project-3/issues"
+  },
+  "homepage": "https://github.com/trcywu/wdi-project-3#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "method-override": "^2.3.5",
+    "mongoose": "^4.4.15",
+    "morgan": "^1.7.0"
+  }
+}
