@@ -7,6 +7,8 @@ var bodyParser			= require("body-parser");
 var mongoose				= require("mongoose");
 var passport				= require("passport");
 var expressJWT			= require("express-jwt");
+var routes					= require("./config/routes");
+var cors						= require("cors");
 
 // Database
 mongoose.connect(config.database);
@@ -44,9 +46,14 @@ app.use(function(err, req, res, next) {
 		return res.status(401).json({ message: "Unauthorized request" });
 	}
 	next();
-})
+});
+
+// Cors
+app.use(cors());
 
 
+// Routes
+app.use("/api", routes);
 
 app.listen(config.port, function() {
 	console.log("Express is running on port ", config.port);

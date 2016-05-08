@@ -19,6 +19,7 @@
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.1",
+    "cors": "^2.7.1",
     "express": "^4.13.4",
     "express-jwt": "^3.4.0",
     "jsonwebtoken": "^6.2.0",
