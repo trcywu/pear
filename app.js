@@ -9,6 +9,8 @@ var passport				= require("passport");
 
 mongoose.connect(config.database);
 
+require("./config/passport")(pasport);
+
 app.use(morgan("dev"));
 
 app.use(methodOverride(function(res, req) {
