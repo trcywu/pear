@@ -1,5 +1,18 @@
 var TemplateApp = TemplateApp || {};
 
+TemplateApp.getToken = function() {
+	return window.localStorage.getItem("token");
+}
+
+TemplateApp.setToken = function(token) {
+	return window.localStorage.setItem("token", token);
+}
+
+TemplateApp.saveTokenIfPresent = function(data) {
+	if (data.token) return this.setToken(data.token);
+	return false;
+}
+
 TemplateApp.ajaxRequest(method, url, data) {
 	return $.ajax({
 		method: method,
@@ -7,6 +20,7 @@ TemplateApp.ajaxRequest(method, url, data) {
 		data: 	data
 	}).done(function(data) {
 		console.log(data);
+		return TemplateApp.saveTokenIfPresent(data);
 	}).fail(function() {
 		console.log(data.responseJSON.message);
 	});
