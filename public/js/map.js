@@ -145,18 +145,4 @@ MapApp.initialize = function(){
   this.home();
 };
 
-$(function(){
-  // MapApp.canvas = $('#map-canvas');
 
-  // var mapOptions = {
-  //   zoom: 12,
-  //   center: new google.maps.LatLng(51.506178,-0.088369),
-  //   mapTypeId: google.maps.MapTypeId.ROADMAP
-  // };
-
-  // MapApp.map = new google.maps.Map(this.canvas, mapOptions);
-
-  MapApp.initialize(); 
-  $('body').append("hello?") 
-})
-*/
