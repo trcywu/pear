@@ -34,7 +34,7 @@ userSchema.path("passwordHash")
 	if (!this._password) {
 		this.invalidate("password", "Password is required");
 	}
-	if (this.password.length <= 8) {
+	if (this._password.length < 8) {
 		this.invalidate("password", "Password must be 8 characters or more");
 	}
 	if (this._password !== this._passwordConfirmation) {

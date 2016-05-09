@@ -1,14 +1,16 @@
 var config					= require("./config/config");
 var express					= require("express");
-var app							= express();
 var morgan					= require("morgan");
 var methodOverride	= require("method-override");
 var bodyParser			= require("body-parser");
 var mongoose				= require("mongoose");
 var passport				= require("passport");
 var expressJWT			= require("express-jwt");
-var routes					= require("./config/routes");
 var cors						= require("cors");
+
+var routes					= require("./config/routes");
+
+var app							= express();
 
 // Database
 mongoose.connect(config.database);

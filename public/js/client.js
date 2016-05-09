@@ -18,7 +18,7 @@ TemplateApp.setRequestHeader = function(xhr, settings) {
 	if (token) return xhr.setRequestHeader("Authorization", "Bearer " + token);
 }
 
-TemplateApp.ajaxRequest(method, url, data) {
+TemplateApp.ajaxRequest = function(method, url, data) {
 	return $.ajax({
 		method: 		method,
 		url: 				"http://localhost:3000/api" + url,
@@ -44,6 +44,11 @@ TemplateApp.submitForm = function() {
 
 TemplateApp.getUsers = function() {
 	return TemplateApp.ajaxRequest("get", "/users");
+}
+
+TemplateApp.initialize = function() {
+	$("form").on("submit", this.submitForm);
+	$("#getUsers").on("click", this.getUsers);
 }
 
 $(function(){
