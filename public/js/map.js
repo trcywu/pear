@@ -43,14 +43,14 @@ MapApp.addInfoWindowForVenue = function(venue, marker){
 
 MapApp.createMarkerForVenue = function(venue, timeout) {
   var self = this;
-  var latlng = new google.maps.LatLng(venue.location.lat, venue.location.lng);
+  var latlng = new google.maps.LatLng(venue.geometry.location.lat, venue.geometry.location.lng);
   var image = ("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|00D900");
   window.setTimeout(function(){
   var marker = new google.maps.Marker({
     position: latlng,
     map: self.map,
-    icon: image,
-    animation: google.maps.Animation.DROP
+    icon: image
+    // animation: google.maps.Animation.DROP
   })
   self.addInfoWindowForVenue(venue, marker);
 }, timeout)
@@ -58,7 +58,7 @@ MapApp.createMarkerForVenue = function(venue, timeout) {
 
 
 MapApp.loopThroughVenues = function(data){
-  return $.each(data.response.venues, function(i, venue) {
+  return $.each(data.results, function(i, venue) {
     MapApp.createMarkerForVenue(venue, i*10);
   })
 }
@@ -68,7 +68,7 @@ MapApp.getVenues = function(lat, lng){
     var self = this;
      return $.ajax({
       type: "GET",
-      url: "https://api.foursquare.com/v2/venues/search?ll="+lat+","+lng+"&categoryId=4bf58dd8d48988d116941735&intent=browse&radius=1000&oauth_token=E3EZY0RD23C5ZUEMVFSDNZWGS3R3UMGDSHAHEDMPIFUYMFHD&v=20160509",
+      url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=500&type=bar&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno"
     }).done(self.loopThroughVenues)
 
 }
