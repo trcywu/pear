@@ -2,16 +2,18 @@
 <html>
 <head>
 	<title>WDI Project 3</title>
-	<link rel="stylesheet" type="text/css" href="/css/style.css">
-  <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
-  <script type="text/javascript" src="/vendor/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+  <link rel="stylesheet" type="text/css" href="./vendor/bootstrap/dist/css/bootstrap.min.css">
+  <script type="text/javascript" src="./vendor/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="./vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="./vendor/underscore/underscore.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxM36DxD-TmmCuWMML0UXBVSirOUkF42Q" charset="utf-8"></script>
-	<script type="text/javascript" src="/js/client.js"></script>
+	<script type="text/javascript" src="./js/client.js"></script>
+  <script type="text/javascript" src="./js/map.js"></script>
 </head>
+
 <body>
-<div id='map-canvas'></div>
+<header>
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -21,11 +23,11 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Pear</a>
+        <a class="navbar-brand" href="/" data-template="home">Pear</a>
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><a href="#">Venues</a></li>
+          <li><a href="">Venues</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <form class="navbar-form navbar-left" role="search">
@@ -34,54 +36,26 @@
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
           </form>
+          <ul class="nav navbar-nav navbar-right">
+          <li><a href="/register" data-template="register">Register</a></li>
+          <li><a href="/login" data-template="login">Login</a></li>
+          </ul>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">My Account</a></li>
-              <li><a href="#">Edit Account</a></li>
+              <li><a href="">My Account</a></li>
+              <li><a href="">Edit Account</a></li>
               <li role="separator" class="divider"></li>
-              <li><a href="#">Logout</a></li>
+              <li><a href="">Logout</a></li>
             </ul>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  <h1>Home</h1>
+ </header>
 
-  <h2>Register</h2>
-  <form class="register" method="post" action="/register">
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" name="username" id="username" class="form-control" placeholder="Username">
-    </div>
-    <div class="form-group">
-      <label for="firstName">First name</label>
-      <input type="text" name="firstName" id="firstName" class="form-control" placeholder="First name">
-    </div>
-    <div class="form-group">
-      <label for="lastName">Last name</label>
-      <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Last name">
-    </div>
-    <div class="form-group">
-      <label for="image">image</label>
-      <input type="text" name="image" id="image" class="form-control" placeholder="Image URL">
-    </div>
-    <div class="form-group">
-      <label for="email">Email address</label>
-      <input type="email" name="email" id="email" class="form-control" placeholder="Email">
-    </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" name="password" id="password" class="form-control" placeholder="Password">
-    </div>
-    <div class="form-group">
-      <label for="passwordConfirmation">Password</label>
-      <input type="password" name="passwordConfirmation" id="passwordConfirmation" class="form-control" placeholder="Confirm Password">
-    </div>
-    <button type="submit" class="btn btn-default">Submit</button>
-  </form>
+  <main class="container"></main>
 
-  <button id="getUsers">Get Users</button>
 </body>
 </html>
