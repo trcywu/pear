@@ -31,14 +31,16 @@ userSchema.virtual("passwordConfirmation")
 
 userSchema.path("passwordHash")
 .validate(function() {
-	if (!this._password) {
-		this.invalidate("password", "Password is required");
-	}
-	if (this._password.length < 8) {
-		this.invalidate("password", "Password must be 8 characters or more");
-	}
-	if (this._password !== this._passwordConfirmation) {
-		this.invalidate("passwordConfirmation", "The password and password confirmation must match");
+	if (this.isNew) {
+		if (!this._password) {
+			this.invalidate("password", "Password is required");
+		}
+		if (this._password.length < 8) {
+			this.invalidate("password", "Password must be 8 characters or more");
+		}
+		if (this._password !== this._passwordConfirmation) {
+			this.invalidate("passwordConfirmation", "The password and password confirmation must match");
+		}
 	}
 });
 

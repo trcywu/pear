@@ -28,7 +28,7 @@ TemplateApp.ajaxRequest = function(method, url, data) {
 		console.log(data);
 		return TemplateApp.saveTokenIfPresent(data);
 	}).fail(function() {
-		console.log(data.responseJSON.message);
+		// console.log(data.responseJSON.message); // Not working currently. Will need to be fixed.
 	});
 }
 
