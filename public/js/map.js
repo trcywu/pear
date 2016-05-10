@@ -29,6 +29,50 @@ MapApp.getTemplate = function(tpl, data){
   })
 }
 
+MapApp.addInfoWindowForVenue = function(venue, marker){
+  var self = this;
+  google.maps.event.addListener(marker, "click", function(){
+    if (typeof self.infowindow != "undefined") self.infowindow.close();
+    self.infowindow = new google.maps.InfoWindow({
+      content: venue.name
+    });
+
+    self.infowindow.open(self.map, this);
+  })
+}
+
+MapApp.createMarkerForVenue = function(venue, timeout) {
+  var self = this;
+  var latlng = new google.maps.LatLng(venue.geometry.location.lat, venue.geometry.location.lng);
+  var image = ("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|00D900");
+  window.setTimeout(function(){
+  var marker = new google.maps.Marker({
+    position: latlng,
+    map: self.map,
+    icon: image
+    // animation: google.maps.Animation.DROP
+  })
+  self.addInfoWindowForVenue(venue, marker);
+}, timeout)
+}
+
+
+MapApp.loopThroughVenues = function(data){
+  return $.each(data.results, function(i, venue) {
+    MapApp.createMarkerForVenue(venue, i*10);
+  })
+}
+
+MapApp.getVenues = function(lat, lng){
+    if (!lat || !lng ) return false
+    var self = this;
+     return $.ajax({
+      type: "GET",
+      url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=500&type=bar&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno"
+    }).done(self.loopThroughVenues)
+
+}
+
 MapApp.showMap = function(){
   this.canvas = document.getElementById('canvas-map');
 
@@ -37,9 +81,14 @@ MapApp.showMap = function(){
     center: new google.maps.LatLng(51.506178,-0.088369),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
-  var map;
-  map = new google.maps.Map(this.canvas, mapOptions);
-  console.log(this.map)
+  this.map = new google.maps.Map(this.canvas, mapOptions);
+  this.getVenues();
+  google.maps.event.addListener(this.map, 'mouseup', function(event) {
+     var currentLat = MapApp.map.getCenter().lat();
+     var currentLng = MapApp.map.getCenter().lng();
+     MapApp.getVenues(currentLat, currentLng);
+     console.log(currentLat, currentLng);
+  });
 }
 
 MapApp.home = function(){
@@ -55,6 +104,7 @@ $(function(){
 
   MapApp.initialize();
 })
+
 
 
 

@@ -51,6 +51,84 @@ TemplateApp.initialize = function() {
 	$("#getUsers").on("click", this.getUsers);
 }
 
+
+
+// MapApp.home = function(){
+//   this.apiAjaxRequest("/", "get", null, "home")
+// }
+
+// TemplateApp.apiAjaxRequest = function(url, method, data, tpl){
+//   return $.ajax({
+//     type: method,
+//     url: 'http://localhost:3000/' + url,
+//     data: data,
+//   }).done(function(data){
+//     if (!data) return console.log('Wat')// MapApp.home();
+//     if (tpl) return TemplateApp.getTemplate(tpl, data, url)
+//       console.log(url)
+//   }).fail(function(){
+//     console.log("Something has gone wrong here.")
+//   })
+// }
+
+
+TemplateApp.getTemplate = function(tpl, data){
+  var templateUrl = "http://localhost:3000/templates" + tpl + ".html";
+
+  $.ajax({
+    url: templateUrl,
+    method: "GET",
+    dataType: "html"
+  }).done(function(templateData){
+    var parsedTemplate   = _.template(templateData);
+    var compiledTemplate = parsedTemplate(data);
+    $("main").empty().append(compiledTemplate);
+  })
+}
+
+
+TemplateApp.linkClick = function(){
+  
+  var external = $(this).data("external");
+  if (external) return;
+  event.preventDefault();
+  var url = $(this).attr("href");
+  var tpl = $(this).data("template");
+  if (url)   //return 
+    // TemplateApp.apiAjaxRequest(url, "get", null, tpl);
+  // If there isn't a href, just load the template 
+  return TemplateApp.getTemplate(tpl, null, url);
+}
+
+TemplateApp.formSubmit = function(){
+  event.preventDefault();
+  var method = $(this).attr("method");
+  var url    = $(this).attr("action");
+  var tpl    = $(this).data("template");
+  var data   = $(this).serialize();
+  return TemplateApp.apiAjaxRequest(url, method, data, tpl);
+}
+
+TemplateApp.bindLinkClicks = function(){
+  // Event delegation
+  $("nav").on("click", "a", this.linkClick);
+}
+
+TemplateApp.bindFormSubmits = function(){
+  // Event delegation
+  $("body").on("submit", "form", this.formSubmit);
+}
+
+
+
+TemplateApp.initialize = function(){
+  this.bindLinkClicks();
+  // this.bindFormSubmits();
+};
+
+
+
+
 $(function(){
 	TemplateApp.initialize();
 });
