@@ -48,11 +48,6 @@ Pear.getUsers = function() {
 	return Pear.ajaxRequest("get", "/users");
 }
 
-Pear.initialize = function() {
-	$("form").on("submit", this.submitForm);
-	$("#getUsers").on("click", this.getUsers);
-}
-
 Pear.getTemplate = function(tpl, data){
   var templateUrl = "http://localhost:3000/templates/" + tpl + ".html";
 
@@ -97,6 +92,11 @@ Pear.bindLinkClicks = function(){
 Pear.bindFormSubmits = function(){
   // Event delegation
   $("body").on("submit", "form", this.formSubmit);
+}
+
+Pear.initialize = function() {
+	$("form").on("submit", this.submitForm);
+	$("#getUsers").on("click", this.getUsers);
 }
 
 Pear.initialize = function(){

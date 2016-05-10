@@ -1,5 +1,13 @@
 var Pear = Pear || {};
 
+Pear.map;
+Pear.canvas;
+Pear.markers = [];
+Pear.defaultCenter = { 
+  lat: 51.506178, 
+  lng: -0.088369 
+}
+
 Pear.addInfoWindowForVenue = function(venue, marker){
   var self = this;
   google.maps.event.addListener(marker, "click", function(){
@@ -13,83 +21,104 @@ Pear.addInfoWindowForVenue = function(venue, marker){
 }
 
 Pear.createMarkerForVenue = function(venue, timeout) {
-  var self = this;
+  var self   = this;
   var latlng = new google.maps.LatLng(venue.geometry.location.lat, venue.geometry.location.lng);
-  var image = ("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|00D900");
-  window.setTimeout(function(){
-    var marker = new google.maps.Marker({
-      position: latlng,
-      map: self.map,
-      icon: image
-      // animation: google.maps.Animation.DROP
-    })
-    self.addInfoWindowForVenue(venue, marker);
-  }, timeout)
+  var image  = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|00D900";
+
+  var marker = new google.maps.Marker({
+    position: latlng,
+    map: self.map,
+    icon: image
+  })
+  
+  Pear.markers.push(marker);
+  self.addInfoWindowForVenue(venue, marker);
+}
+
+// Sets the map on all markers in the array.
+Pear.setMapOnAll = function(map) {
+  for (var i = 0; i < Pear.markers.length; i++) {
+    Pear.markers[i].setMap(map);
+  }
+}
+
+// Shows any markers currently in the array.
+Pear.showMarkers = function() {
+  Pear.setMapOnAll(Pear.map);
+}
+
+// Removes the markers from the map, but keeps them in the array.
+Pear.clearMarkers = function() {
+  Pear.setMapOnAll(null);
+}
+
+// Deletes all markers in the array by removing references to them.
+Pear.deleteMarkers = function() {
+  Pear.clearMarkers();
+  Pear.markers = [];
 }
 
 Pear.loopThroughVenues = function(data){
+  Pear.deleteMarkers();
+
   return $.each(data.results, function(i, venue) {
     Pear.createMarkerForVenue(venue, i*10);
   })
 }
 
 Pear.getVenues = function(lat, lng){
-  if (!lat || !lng ) return false
+  if (!lat || !lng ) return false;
+
   var self = this;
   return $.ajax({
     type: "GET",
-    url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=500&type=bar&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno"
+    url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=250&type=bar&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno"
   }).done(self.loopThroughVenues)
 }
 
-// Pear.showMap = function(){
-//   Pear.canvas = document.getElementById('canvas-map');
+Pear.populateMarkersOnDrag = function() {
+  google.maps.event.addListener(Pear.map, 'mouseup', function(event) {
+    var currentLat = Pear.map.getCenter().lat();
+    var currentLng = Pear.map.getCenter().lng();
+    Pear.getVenues(currentLat, currentLng);
+ });
+}
 
-//   var mapOptions = {
-//     zoom: 14,
-//     center: new google.maps.LatLng(51.506178,-0.088369),
-//     mapTypeId: google.maps.MapTypeId.ROADMAP
-//   };
-//   Pear.map = new google.maps.Map(Pear.canvas, mapOptions);
-
-//   var currentLat = Pear.map.getCenter().lat();
-//   var currentLng = Pear.map.getCenter().lng();
-//   Pear.getVenues(currentLat, currentLng);
-
-//   google.maps.event.addListener(Pear.map, 'mouseup', function(event) {
-//      var currentLat = Pear.map.getCenter().lat();
-//      var currentLng = Pear.map.getCenter().lng();
-//      Pear.getVenues(currentLat, currentLng);
-//   });
-// }
-
-Pear.initMap = function() { 
-  var self = this;
-  Pear.canvas = new google.maps.Map(document.getElementById('canvas-map'), {
-    zoom: 14,
-    center: {lat: 51.5206519, lng: -0.0072648},
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  });
+Pear.geocodeAddress = function() {
   var geocoder = new google.maps.Geocoder();
-  // console.log(geocoder)
+  var address  = document.getElementById('address').value;
 
-  document.getElementById('submit').addEventListener('click', function() {
-    console.log(this)
-    self.geocodeAddress(geocoder, self.canvas);
+  geocoder.geocode({ 'address': address }, function(results, status) {
+    if (status !== google.maps.GeocoderStatus.OK) return alert('Geocode was not successful for the following reason: ' + status);
+
+    var marker = new google.maps.Marker({
+      map: Pear.map,
+      position: results[0].geometry.location
+    });
+
+    Pear.map.panTo(marker.position);
+    Pear.map.setZoom(16);
+    Pear.getVenues(results[0].geometry.location.lat(), results[0].geometry.location.lng());
   });
 }
 
-Pear.geocodeAddress = function(geocoder, resultsMap) {
-  var address = document.getElementById('address').value;
-  geocoder.geocode({'address': address}, function(results, status) {
-    if (status === google.maps.GeocoderStatus.OK) {
-      resultsMap.setCenter(results[0].geometry.location);
-      var marker = new google.maps.Marker({
-        map: resultsMap,
-        position: results[0].geometry.location
-      });
-    } else {
-      alert('Geocode was not successful for the following reason: ' + status);
-    }
+Pear.setupGeocodeSearch = function() {
+  var submitButton = document.getElementById('submit');
+  submitButton.addEventListener('click', Pear.geocodeAddress);
+}
+
+Pear.initMap = function() { 
+  this.canvas = document.getElementById('canvas-map');
+
+  this.map = new google.maps.Map(this.canvas, {
+    zoom: 14,
+    center: Pear.defaultCenter,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
   });
+
+  // Binds the submit function for the search
+  this.setupGeocodeSearch();
+
+  // Get position sets up the mouseEvent when you drag the map
+  this.populateMarkersOnDrag(this.map);
 }
