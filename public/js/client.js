@@ -18,7 +18,7 @@ Pear.setRequestHeader = function(xhr, settings) {
 	if (token) return xhr.setRequestHeader("Authorization", "Bearer " + token);
 }
 
-Pear.ajaxRequest = function(method, url, data) {
+Pear.ajaxRequest = function(method, url, data, tpl) {
 	return $.ajax({
 		method: 		method,
 		url: 				"http://localhost:3000/api" + url,
@@ -29,29 +29,16 @@ Pear.ajaxRequest = function(method, url, data) {
 		Pear.saveTokenIfPresent(data);
 		if (tpl) return Pear.getTemplate(tpl, data, url)
 	}).fail(function(data) {
-		// Not working currently. Will need to be fixed.
-		console.log(data.responseJSON.message);
+		// // Not working currently. Will need to be fixed.
+		// console.log(data.responseJSON.message);
 	});
 }
 
-Pear.submitForm = function() {
-	event.preventDefault();
-
-	var method	= $(this).attr("method");
-	var url			= $(this).attr("action");
-	var data		= $(this).serialize();
-
-	return Pear.ajaxRequest(method, url, data);
-}
 
 Pear.getUsers = function() {
+  console.log("Now this should console log!!!!")
 	return Pear.ajaxRequest("get", "/users");
-}
-
-Pear.initialize = function() {
-	$("form").on("submit", this.submitForm);
-	$("#getUsers").on("click", this.getUsers);
-}
+} //not using this right now, until we make user pages
 
 Pear.getTemplate = function(tpl, data){
   var templateUrl = "http://localhost:3000/templates/" + tpl + ".html";
@@ -92,6 +79,7 @@ Pear.formSubmit = function(){
 Pear.bindLinkClicks = function(){
   // Event delegation
   $("nav").on("click", "a", this.linkClick);
+  $("main").on("click", "#getUsers", this.getUsers);
 }
 
 Pear.bindFormSubmits = function(){

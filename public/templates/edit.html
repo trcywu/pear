@@ -1,0 +1,23 @@
+<h1>Edit User</h1>
+
+<form method="post" action="/users/<%= user._id %>" data-template="users/show">
+  <input type="hidden" name="_method" value="put">
+  <div class="form-group">
+    <label for="name">Username</label>
+    <input type="text" class="form-control" id="username" name="user[username]" placeholder="username" value="<%= user.username %>">
+  </div>
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input type="text" class="form-control" id="firstName" name="user[firstName]" placeholder="twitter" value="<%= user.firstname%>">
+  </div>
+  <div class="form-group">
+    <label for="lastName">Last Name</label>
+    <input type="text" class="form-control" id="lastName" name="user[lastName]"  placeholder="lastName" value="<%= user.lastName %>">
+  </div>
+  <div class="form-group">
+    <label for="image">Image URL</label>
+    <input type="text" class="form-control" id="image" name="user[image]" placeholder="image" value="<%= user.image %>">
+  </div>
+
+  <button type="submit" class="btn btn-default">Edit</button>
+</form>
