@@ -3,6 +3,7 @@
   border: 0 solid #ef5350;
   border-radius: 0;
   height: 60px;
+  margin-bottom: 0;
 }
 
 a.navbar-brand {
@@ -17,6 +18,28 @@ a.navbar-brand {
 
 .navbar-default .navbar-nav>li>a {
     color: #fff;
+}
+
+.btn-default {
+  background-color: #ef5350;
+  border: none;
+}
+
+.fa {
+  color: #fff;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #fff;
+}
+
+.navbar-default .navbar-toggle {
+    border: none;
+}
+
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border: none;
 }
 
 
@@ -57,20 +80,3 @@ a.navbar-brand img {
 /*button.fa.fa-search {
   background-color: none;
 }*/
-
-.btn-default {
-  background-color: #ef5350;
-  border: none;
-}
-
-.fa {
-  color: #fff;
-}
-
-.navbar-default .navbar-toggle .icon-bar {
-    background-color: #fff;
-}
-
-.navbar-default .navbar-toggle {
-    border: none;
-}
