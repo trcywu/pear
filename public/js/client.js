@@ -64,7 +64,7 @@ Pear.getTemplate = function(tpl, data){
     var parsedTemplate   = _.template(templateData);
     var compiledTemplate = parsedTemplate(data);
     $("main").html(compiledTemplate);
-		if ($("#canvas-map").length > 0) Pear.showMap();
+		if ($("#canvas-map").length > 0) Pear.initMap();
   })
 }
 

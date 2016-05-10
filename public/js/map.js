@@ -42,23 +42,54 @@ Pear.getVenues = function(lat, lng){
   }).done(self.loopThroughVenues)
 }
 
-Pear.showMap = function(){
-  Pear.canvas = document.getElementById('canvas-map');
+// Pear.showMap = function(){
+//   Pear.canvas = document.getElementById('canvas-map');
 
-  var mapOptions = {
+//   var mapOptions = {
+//     zoom: 14,
+//     center: new google.maps.LatLng(51.506178,-0.088369),
+//     mapTypeId: google.maps.MapTypeId.ROADMAP
+//   };
+//   Pear.map = new google.maps.Map(Pear.canvas, mapOptions);
+
+//   var currentLat = Pear.map.getCenter().lat();
+//   var currentLng = Pear.map.getCenter().lng();
+//   Pear.getVenues(currentLat, currentLng);
+
+//   google.maps.event.addListener(Pear.map, 'mouseup', function(event) {
+//      var currentLat = Pear.map.getCenter().lat();
+//      var currentLng = Pear.map.getCenter().lng();
+//      Pear.getVenues(currentLat, currentLng);
+//   });
+// }
+
+Pear.initMap = function() { 
+  var self = this;
+  Pear.canvas = new google.maps.Map(document.getElementById('canvas-map'), {
     zoom: 14,
-    center: new google.maps.LatLng(51.506178,-0.088369),
+    center: {lat: 51.5206519, lng: -0.0072648},
     mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-  Pear.map = new google.maps.Map(Pear.canvas, mapOptions);
+  });
+  var geocoder = new google.maps.Geocoder();
+  // console.log(geocoder)
 
-  var currentLat = Pear.map.getCenter().lat();
-  var currentLng = Pear.map.getCenter().lng();
-  Pear.getVenues(currentLat, currentLng);
+  document.getElementById('submit').addEventListener('click', function() {
+    console.log(this)
+    self.geocodeAddress(geocoder, self.canvas);
+  });
+}
 
-  google.maps.event.addListener(Pear.map, 'mouseup', function(event) {
-     var currentLat = Pear.map.getCenter().lat();
-     var currentLng = Pear.map.getCenter().lng();
-     Pear.getVenues(currentLat, currentLng);
+Pear.geocodeAddress = function(geocoder, resultsMap) {
+  var address = document.getElementById('address').value;
+  geocoder.geocode({'address': address}, function(results, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      resultsMap.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+        map: resultsMap,
+        position: results[0].geometry.location
+      });
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
   });
 }
