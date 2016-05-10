@@ -38,7 +38,7 @@ Pear.ajaxRequest = function(method, url, data, tpl) {
 Pear.getUsers = function() {
   console.log("Now this should console log!!!!")
 	return Pear.ajaxRequest("get", "/users");
-} //not using this right now, until we make user pages
+}
 
 Pear.getTemplate = function(tpl, data){
   var templateUrl = "http://localhost:3000/templates/" + tpl + ".html";
@@ -51,7 +51,7 @@ Pear.getTemplate = function(tpl, data){
     var parsedTemplate   = _.template(templateData);
     var compiledTemplate = parsedTemplate(data);
     $("main").html(compiledTemplate);
-		if ($("#canvas-map").length > 0) Pear.showMap();
+		if ($("#canvas-map").length > 0) Pear.initMap();
   })
 }
 
@@ -85,6 +85,11 @@ Pear.bindLinkClicks = function(){
 Pear.bindFormSubmits = function(){
   // Event delegation
   $("body").on("submit", "form", this.formSubmit);
+}
+
+Pear.initialize = function() {
+	$("form").on("submit", this.submitForm);
+	$("#getUsers").on("click", this.getUsers);
 }
 
 Pear.initialize = function(){
