@@ -68,7 +68,7 @@ MapApp.getVenues = function(lat, lng){
     var self = this;
      return $.ajax({
       type: "GET",
-      url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=500&type=bar&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno"
+      url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=100&type=bar&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno"
     }).done(self.loopThroughVenues)
 
 }
