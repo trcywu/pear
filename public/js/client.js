@@ -1,24 +1,24 @@
-var TemplateApp = TemplateApp || {};
+var Pear = Pear || {};
 
-TemplateApp.getToken = function() {
+Pear.getToken = function() {
 	return window.localStorage.getItem("token");
 }
 
-TemplateApp.setToken = function(token) {
+Pear.setToken = function(token) {
 	return window.localStorage.setItem("token", token);
 }
 
-TemplateApp.saveTokenIfPresent = function(data) {
+Pear.saveTokenIfPresent = function(data) {
 	if (data.token) return this.setToken(data.token);
 	return false;
 }
 
-TemplateApp.setRequestHeader = function(xhr, settings) {
-	var token = TemplateApp.getToken();
+Pear.setRequestHeader = function(xhr, settings) {
+	var token = Pear.getToken();
 	if (token) return xhr.setRequestHeader("Authorization", "Bearer " + token);
 }
 
-TemplateApp.ajaxRequest = function(method, url, data) {
+Pear.ajaxRequest = function(method, url, data) {
 	return $.ajax({
 		method: 		method,
 		url: 				"http://localhost:3000/api" + url,
@@ -26,54 +26,35 @@ TemplateApp.ajaxRequest = function(method, url, data) {
 		beforeSend: this.setRequestHeader
 	}).done(function(data) {
 		console.log(data);
-		return TemplateApp.saveTokenIfPresent(data);
+		Pear.saveTokenIfPresent(data);
+		if (tpl) return Pear.getTemplate(tpl, data, url)
 	}).fail(function(data) {
-		console.log(data.responseJSON.message); // Not working currently. Will need to be fixed.
+		// Not working currently. Will need to be fixed.
+		console.log(data.responseJSON.message);
 	});
 }
 
-TemplateApp.submitForm = function() {
+Pear.submitForm = function() {
 	event.preventDefault();
 
 	var method	= $(this).attr("method");
 	var url			= $(this).attr("action");
 	var data		= $(this).serialize();
 
-	return TemplateApp.ajaxRequest(method, url, data);
+	return Pear.ajaxRequest(method, url, data);
 }
 
-TemplateApp.getUsers = function() {
-	return TemplateApp.ajaxRequest("get", "/users");
+Pear.getUsers = function() {
+	return Pear.ajaxRequest("get", "/users");
 }
 
-TemplateApp.initialize = function() {
+Pear.initialize = function() {
 	$("form").on("submit", this.submitForm);
 	$("#getUsers").on("click", this.getUsers);
 }
 
-
-
-// MapApp.home = function(){
-//   this.apiAjaxRequest("/", "get", null, "home")
-// }
-
-// TemplateApp.apiAjaxRequest = function(url, method, data, tpl){
-//   return $.ajax({
-//     type: method,
-//     url: 'http://localhost:3000/' + url,
-//     data: data,
-//   }).done(function(data){
-//     if (!data) return console.log('Wat')// MapApp.home();
-//     if (tpl) return TemplateApp.getTemplate(tpl, data, url)
-//       console.log(url)
-//   }).fail(function(){
-//     console.log("Something has gone wrong here.")
-//   })
-// }
-
-
-TemplateApp.getTemplate = function(tpl, data){
-  var templateUrl = "http://localhost:3000/templates" + tpl + ".html";
+Pear.getTemplate = function(tpl, data){
+  var templateUrl = "http://localhost:3000/templates/" + tpl + ".html";
 
   $.ajax({
     url: templateUrl,
@@ -82,53 +63,47 @@ TemplateApp.getTemplate = function(tpl, data){
   }).done(function(templateData){
     var parsedTemplate   = _.template(templateData);
     var compiledTemplate = parsedTemplate(data);
-    $("main").empty().append(compiledTemplate);
+    $("main").html(compiledTemplate);
+		if ($("#canvas-map").length > 0) Pear.showMap();
   })
 }
 
-
-TemplateApp.linkClick = function(){
-  
+Pear.linkClick = function(){
   var external = $(this).data("external");
   if (external) return;
+
   event.preventDefault();
   var url = $(this).attr("href");
   var tpl = $(this).data("template");
-  if (url)   //return 
-    // TemplateApp.apiAjaxRequest(url, "get", null, tpl);
-  // If there isn't a href, just load the template 
-  return TemplateApp.getTemplate(tpl, null, url);
+  // If there isn't a href, just load the template
+  if (url) return Pear.ajaxRequest("get", url, null, tpl)
+	return Pear.getTemplate(tpl, null);
 }
 
-TemplateApp.formSubmit = function(){
+Pear.formSubmit = function(){
   event.preventDefault();
   var method = $(this).attr("method");
   var url    = $(this).attr("action");
   var tpl    = $(this).data("template");
   var data   = $(this).serialize();
-  return TemplateApp.apiAjaxRequest(url, method, data, tpl);
+  return Pear.ajaxRequest(method, url, data, tpl);
 }
 
-TemplateApp.bindLinkClicks = function(){
+Pear.bindLinkClicks = function(){
   // Event delegation
   $("nav").on("click", "a", this.linkClick);
 }
 
-TemplateApp.bindFormSubmits = function(){
+Pear.bindFormSubmits = function(){
   // Event delegation
   $("body").on("submit", "form", this.formSubmit);
 }
 
-
-
-TemplateApp.initialize = function(){
+Pear.initialize = function(){
   this.bindLinkClicks();
-  // this.bindFormSubmits();
+  this.bindFormSubmits();
 };
 
-
-
-
 $(function(){
-	TemplateApp.initialize();
+	Pear.initialize();
 });
