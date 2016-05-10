@@ -26,12 +26,9 @@
 }
 
 .slider-handle.custom {
-	text-align: center;
-}
-
-.slider-handle.custom::before {
 	margin: 0 auto;
-	line-height: 20px;
-	font-size: 20px;
-	content: url("../images/pear-solo.png"); /*unicode star character*/
+	height: 30px;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	content: url("../images/pear-solo.png");
 }
