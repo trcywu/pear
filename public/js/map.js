@@ -111,7 +111,7 @@ MapApp.linkClick = function(){
   var tpl = $(this).data("template");
   // If there is a href defined on the a link, then get the data
   if (url) return MapApp.apiAjaxRequest(url, "get", null, tpl);
-  // If there isn't a href, just load the template 
+  // If there isn't a href, just load the template
   return MapApp.getTemplate(tpl, null, url);
 }
 
@@ -145,4 +145,4 @@ MapApp.initialize = function(){
   this.home();
 };
 
-
+*/
