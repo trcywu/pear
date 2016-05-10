@@ -14,3 +14,7 @@ a.navbar-brand {
 .navbar-default .navbar-brand {
     color: #fff;
 }
+
+.navbar-default .navbar-nav>li>a {
+    color: #fff;
+}
