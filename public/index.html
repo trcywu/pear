@@ -3,14 +3,18 @@
 
 <head>
 	<title>WDI Project 3</title>
-	<link rel="stylesheet" type="text/css" href="./css/style.css">
 	<link rel="stylesheet" type="text/css" href="./vendor/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./vendor/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css">
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+	<link rel="stylesheet" type="text/css" href="./css/footer.css">
 	<script type="text/javascript" src="./vendor/jquery/dist/jquery.js"></script>
 	<script type="text/javascript" src="./vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./vendor/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
 	<script type="text/javascript" src="./vendor/underscore/underscore.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxM36DxD-TmmCuWMML0UXBVSirOUkF42Q" charset="utf-8"></script>
 	<script type="text/javascript" src="./js/client.js"></script>
 	<script type="text/javascript" src="./js/map.js"></script>
+	<script type="text/javascript" src="./js/slider.js"></script>
 </head>
 
 <body>
@@ -51,6 +55,17 @@
 	</header>
 
 	<main class="container"></main>
+
+	<footer class="footer">
+		<div class="container">
+			<ul class="ratingContainer">
+				<li>Quickie</li>
+				<li><input id="ratingSlider" type="text" data-slider-handle="custom"/></li>
+				<li>Flashy</li>
+			</ul>
+			<p>What mood are you going for?</p>
+		</div>
+	</footer>
 
 </body>
 </html>
