@@ -46,11 +46,31 @@ a.navbar-brand img {
 
 @media (max-width: 500px){
   .navbar-form.navbar-left input[type="textbox"] {
-    width: 130px;
+    width: 120px;
   }
 
   .navbar-form.navbar-left input[type="button"]{
     padding: 6px;
   }
 }
-*/
+
+/*button.fa.fa-search {
+  background-color: none;
+}*/
+
+.btn-default {
+  background-color: #ef5350;
+  border: none;
+}
+
+.fa {
+  color: #fff;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #fff;
+}
+
+.navbar-default .navbar-toggle {
+    border: none;
+}
