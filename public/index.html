@@ -17,35 +17,45 @@
 <body>
 	<header>
 		<nav class="navbar navbar-default">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" data-template="home"><img src="./images/pear-logo.png"></a>
-				</div>
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav navbar-right">
-						<form class="navbar-form navbar-left" role="search">
-							<div class="form-group">
-								<input type="textbox" id="address" value="E1 5JL" class="form-control" placeholder="Search">
-							</div>
-							<input type="button" id="submit" value="Find a date venue!" class="btn btn-default"></input>
-						</form>
-						<ul class="nav navbar-nav navbar-right">
-							<li><a href="#" data-template="register">Register</a></li>
-							<li><a href="#" data-template="login">Login</a></li>
-						</ul>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account<span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">My Account</a></li>
-								<li><a href="#">Edit Account</a></li>
-								<li role="separator" class="divider"></li>
-								<li><a href="#">Logout</a></li>
-							</ul>
-						</li>
-					</ul>
-				</div>
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+			<a class="navbar-brand" data-template="home"><img src="./images/pear-logo.png"></a>
+			<form class="navbar-form navbar-left" role="search">
+				<div class="form-group">
+					<input type="textbox" id="address" placeholder="Pick a location" class="form-control">
+				<input type="button" id="submit" value="S" class="btn btn-default"></input>
 			</div>
-		</nav>
+			</form>
+    </div>
+
+
+
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Profile</a></li>
+				<li><a href="#" data-template="register">Register</a></li>
+				<li><a href="#" data-template="login">Login</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+						<li><a href="#">My Account</a></li>
+						<li><a href="#">Edit Account</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="#">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 	</header>
 
 	<main class="container"></main>

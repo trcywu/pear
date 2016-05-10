@@ -18,3 +18,39 @@ a.navbar-brand {
 .navbar-default .navbar-nav>li>a {
     color: #fff;
 }
+
+
+/* Added in header Tuesday 17:33 */
+.navbar-form.navbar-left {
+    display: inline-block;
+    border: none;
+    margin: 0;
+}
+
+.navbar-form.navbar-left input[type="button"], .navbar-form.navbar-left input[type="textbox"] {
+  display: inline-block;
+  width: initial;
+}
+
+a.navbar-brand img {
+  margin: 0 15px;
+}
+
+@media (min-width: 768px) {
+ .navbar-form.navbar-left {
+   position: relative;
+   top: 50%;
+   transform: translateY(35%);
+ }
+}
+
+@media (max-width: 500px){
+  .navbar-form.navbar-left input[type="textbox"] {
+    width: 130px;
+  }
+
+  .navbar-form.navbar-left input[type="button"]{
+    padding: 6px;
+  }
+}
+*/
