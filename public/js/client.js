@@ -131,6 +131,7 @@ Pear.initialize = function(){
   this.bindFormSubmits();
   this.setSlider();
 	this.checkLoginState();
+  this.getTemplate("home", null);
 };
 
 $(function(){
