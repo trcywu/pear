@@ -8,8 +8,6 @@ Pear.defaultCenter = {
   lng: -0.088369
 }
 Pear.venueTypes = [
-      "amusement_park",
-      "aquarium",
       "art_gallery",
       "bar",
       "bowling_alley",
@@ -20,19 +18,24 @@ Pear.venueTypes = [
       "night_club",
       "park",
       "parking",
-      "restaurant",
-      "zoo"
+      "restaurant"
 ]
 
 Pear.addInfoWindowForVenue = function(venue, marker){
   var self = this;
   google.maps.event.addListener(marker, "click", function(){
+    console.log(venue);
+
     // This is for the sliding side bar
-    	var panel = $('#slide-panel');
-    	if (panel.hasClass("visible")) {
-    		panel.removeClass('visible').animate({'margin-left':'-300px'});
+    	var $panel = $('#slide-panel');
+      $panel.empty();
+      $panel.append("<h1>"+venue.name+"</h1><p><img src='"+venue.icon+"'></p><p>"+venue.types+"</p>");
+
+
+    	if ($panel.hasClass("visible")) {
+    		$panel.removeClass('visible').animate({'margin-left':'-300px'});
     	} else {
-    		panel.addClass('visible').animate({'margin-left':'0px'});
+    		$panel.addClass('visible').animate({'margin-left':'0px'});
     	}
     	return false;
     });
@@ -138,7 +141,7 @@ Pear.getVenues = function(lat, lng){
   $.each(Pear.venueTypes, function(i, venueType) {
     return $.ajax({
       type: "GET",
-      url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=500&type="+venueType+"&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno"
+      url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=500&type="+venueType+"&key=AIzaSyAtQYsLy07B5CVO2lZmmM4a8KKchfnUTdg"
     }).done(self.loopThroughVenues)
   })
 
