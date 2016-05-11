@@ -31,7 +31,7 @@ Pear.changeMapOnSlide = function() {
 		} else {
 			Pear.markers[i].setMap(Pear.map);
 		}
-	})
+	});
 }
 
 Pear.setTooltiptext = function() {

@@ -82,36 +82,85 @@ Pear.addInfoWindowForVenue = function(venue, marker){
 Pear.getMarkerScore = function(types, price, rating) {
   var score = 0;
 
-  if (price) {
-    if (price <= 2) {
-      score += price;
-    }
-    else {
-      score += (price + 1);
-    }
+  switch (types[0]) {
+    case "art_gallery":
+      if (rating && rating >= 2.5) {
+        score = 5;
+      } else {
+        score = 4;
+      } 
+      break;
+    case "bar":
+      if (price) {
+        score = (price + 1);
+      } else if (rating && rating >= 2.5) {
+        score = 4;
+      } else {
+        score = 3;
+      }
+      break;
+    case "bowling_alley":
+      score = 3;
+      break;
+    case "cafe":
+      if (rating && rating >= 3.3) {
+        score = 4;
+      } else if (rating && rating <= 1.6) {
+        score = 2;
+      } else {
+        score = 3;
+      }
+      break;
+    case "casino":
+      if (rating && rating >= 2.5) {
+        score = 4;
+      } else {
+        score = 3;
+      }
+      break;
+    case "movie_theater":
+      score = 3;
+      break;
+    case "museum":
+      if (rating && rating >= 2.5) {
+        score = 5;
+      } else {
+        score = 4;
+      }
+      break;
+    case "night_club":
+      if (price && price === 4) {
+        score = 4;
+      } else if (rating && rating >= 2.5) {
+        score = 4;
+      } else {
+        score = 2;
+      }
+      break;
+    case "park":
+      score = 1;
+      break;
+    case "parking":
+      score = 1;
+      break;
+    case "restaurant":
+      if (price) {
+        score = (price + 1);
+      } else if (rating && rating <= 1.25) {
+        score = 2;
+      } else if (rating && rating <= 2.5) {
+        score = 3;
+      } else if (rating && rating <= 3.75) {
+        score = 4;
+      } else {
+        score = 5;
+      }
+      break;
   }
-
-  if (rating) { score += rating; }
-
-  if ($.inArray("night_club", types)) {
-    score += 1;
-  } else if ($.inArray("restaurant", types)) {
-    score += 5;
-  } else {
-    score += 3;
-  }
-
-  if (!price && !rating) {
-    return Math.floor(score);
-  } else if (!price || !rating) {
-    return Math.floor(score/2);
-  } else {
-    return Math.floor(score/3);
-  }
+  return score;
 }
 
 Pear.createMarkerForVenue = function(venue, timeout) {
-  console.log("This is createMarkerForVenue")
   var self   = this;
   var latlng = new google.maps.LatLng(venue.geometry.location.lat, venue.geometry.location.lng);
   var image  = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|00D900";
@@ -161,7 +210,6 @@ Pear.deleteMarkers = function() {
 
 Pear.loopThroughVenues = function(data){
   // Pear.deleteMarkers();
-  console.log("loopThroughVenues after deleteMarkers")
   return $.each(data.results, function(i, venue) {
     Pear.createMarkerForVenue(venue, i*10);
   });
@@ -170,7 +218,6 @@ Pear.loopThroughVenues = function(data){
 Pear.getVenues = function(lat, lng){
   // if (!lat || !lng ) return false;
   if (!lat || !lng ) {
-    console.log("returns false in getVenues")
     return false;
   }
   var self = this;
