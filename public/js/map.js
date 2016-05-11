@@ -66,11 +66,6 @@ Pear.addInfoWindowForVenue = function(venue, marker){
     	}
     	return false;
     });
-    if (typeof self.infowindow != "undefined") self.infowindow.close();
-    self.infowindow = new google.maps.InfoWindow({
-      content: venue.name
-    });
-    self.infowindow.open(self.map, this);
   //   if (typeof self.var_infobox != "undefined") self.var_infobox.close();
   //   self.var_infobox = new google.maps.InfoWindow({
   //     content: contentString
@@ -139,7 +134,7 @@ Pear.createMarkerForVenue = function(venue, timeout) {
   });
 
   Pear.markers.push(marker);
-  // self.addInfoWindowForVenue(venue, marker);
+  self.addInfoWindowForVenue(venue, marker);
 }
 
 // Sets the map on all markers in the array.
