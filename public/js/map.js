@@ -10,10 +10,21 @@ Pear.defaultCenter = {
 
 Pear.addInfoWindowForVenue = function(venue, marker){
   var self = this;
+  var contentString = 
+  '<div id="iw-container">' +
+  '<div class="iw-title">'+venue.name+'</div>' +
+  '<div class="iw-subTitle">History</div>' +
+  '<p>'+venue.photos.html_attributions+'</p>' +
+  '<div class="iw-subTitle">Price</div>'+
+  '<p>'+venue.price_level+'</p>' +
+  '<div class="iw-content">Rating</div>' +
+  '<div class="iw-bottom-gradient">'+venue.rating+'</div>' +
+  '</div>';
+
   google.maps.event.addListener(marker, "click", function(){
     if (typeof self.infowindow != "undefined") self.infowindow.close();
     self.infowindow = new google.maps.InfoWindow({
-      content: venue.name
+      content: contentString
     });
 
     self.infowindow.open(self.map, this);
