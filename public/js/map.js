@@ -7,6 +7,22 @@ Pear.defaultCenter = {
   lat: 51.506178, 
   lng: -0.088369 
 }
+Pear.venueTypes = [
+      "amusement_park",
+      "aquarium",
+      "art_gallery",
+      "bar",
+      "bowling_alley",
+      "cafe",
+      "casino",
+      "movie_theater",
+      "museum",
+      "night_club",
+      "park",
+      "parking",
+      "restaurant",
+      "zoo"
+]
 
 Pear.addInfoWindowForVenue = function(venue, marker){
   // At this point in time, 'self' is the Pear object:
@@ -57,11 +73,46 @@ Pear.addInfoWindowForVenue = function(venue, marker){
   var_infobox.open(self.map, marker)
 }
 
+Pear.getMarkerScore = function(types, price, rating) {
+  var score = 0;
+
+  if (price) {
+    if (price <= 2) {
+      score += price;
+    }
+    else {
+      score += (price + 1);
+    }
+  }
+
+  if (rating) { score += rating; }
+
+  if ($.inArray("night_club", types)) {
+    score += 1;
+  } else if ($.inArray("restaurant", types)) {
+    score += 5;
+  } else {
+    score += 3;
+  }
+
+  if (!price && !rating) {
+    return Math.floor(score);
+  } else if (!price || !rating) {
+    return Math.floor(score/2);
+  } else {
+    return Math.floor(score/3);
+  }
+}
+
 Pear.createMarkerForVenue = function(venue, timeout) {
   console.log("This is createMarkerForVenue")
   var self   = this;
   var latlng = new google.maps.LatLng(venue.geometry.location.lat, venue.geometry.location.lng);
   var image  = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|00D900";
+  var types  = venue.types;
+  var price  = venue.price_level;
+  var rating = venue.rating;
+  var score  = this.getMarkerScore(types, price, rating);
 
   var pin_red = './images/pin-red-solid-1.png';
 
@@ -69,10 +120,13 @@ Pear.createMarkerForVenue = function(venue, timeout) {
     position: latlng,
     map: self.map,
     icon: pin_red
+    types: types,
+    price: price,
+    rating: rating,
+    score: score
   })
   
   Pear.markers.push(marker);
-  console.log("Pear markers: ", Pear.markers)
   self.addInfoWindowForVenue(venue, marker);
 }
 
@@ -100,13 +154,11 @@ Pear.deleteMarkers = function() {
 }
 
 Pear.loopThroughVenues = function(data){
-  console.log("loopThroughVenues before deleteMarkers")
-
   Pear.deleteMarkers();
   console.log("loopThroughVenues after deleteMarkers")
   return $.each(data.results, function(i, venue) {
     Pear.createMarkerForVenue(venue, i*10);
-  })
+  });
 }
 
 Pear.getVenues = function(lat, lng){
@@ -116,10 +168,16 @@ Pear.getVenues = function(lat, lng){
     return false;
   }
   var self = this;
-  return $.ajax({
-    type: "GET",
-    url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=250&type=bar&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno"
-  }).done(self.loopThroughVenues)
+
+  Pear.deleteMarkers();
+
+  $.each(Pear.venueTypes, function(i, venueType) {
+    return $.ajax({
+      type: "GET",
+      url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=500&type="+venueType+"&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno"
+    }).done(self.loopThroughVenues)
+  })
+
 }
 
 Pear.populateMarkersOnDrag = function() {

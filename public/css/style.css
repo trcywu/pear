@@ -29,3 +29,6 @@ html, body {
   padding: 0;
   min-height: 558px;
 }
+ .register-btn {
+   display: none;
+ }

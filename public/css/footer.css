@@ -32,3 +32,11 @@
 	-webkit-box-shadow: none;
 	content: url("../images/pear-solo.png");
 }
+
+.tooltip-inner {
+	visibility: hidden;
+}
+
+.tooltip-arrow {
+	visibility: hidden;
+}
