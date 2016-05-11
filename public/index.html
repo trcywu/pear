@@ -2,55 +2,79 @@
 <html>
 
 <head>
-	<title>WDI Project 3</title>
-	<link rel="stylesheet" type="text/css" href="./css/style.css">
+	<title>Pear</title>
 	<link rel="stylesheet" type="text/css" href="./vendor/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./vendor/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css">
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+	<link rel="stylesheet" type="text/css" href="./css/header.css">
+	<link rel="stylesheet" type="text/css" href="./css/footer.css">
 	<script type="text/javascript" src="./vendor/jquery/dist/jquery.js"></script>
 	<script type="text/javascript" src="./vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./vendor/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
 	<script type="text/javascript" src="./vendor/underscore/underscore.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxM36DxD-TmmCuWMML0UXBVSirOUkF42Q" charset="utf-8"></script>
+	<script src="https://use.fontawesome.com/f62c34798b.js"></script>
 	<script type="text/javascript" src="./js/client.js"></script>
 	<script type="text/javascript" src="./js/map.js"></script>
+	<script type="text/javascript" src="./js/slider.js"></script>
 </head>
 
 <body>
 	<header>
 		<nav class="navbar navbar-default">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" data-template="home">Pear</a>
-				</div>
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<li><a href="#"class="nav nabar-nav">Venues</a></li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<form class="navbar-form navbar-left" role="search">
-							<div class="form-group">
-								<input type="textbox" id="address" value="E1 5JL" class="form-control" placeholder="Search">
-							</div>
-							<input type="button" id="submit" value="Geocode" class="btn btn-default"></input>
-						</form>
-						<ul class="nav navbar-nav navbar-right">
-							<li><a href="#" data-template="register">Register</a></li>
-							<li><a href="#" data-template="login">Login</a></li>
-						</ul>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account<span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">My Account</a></li>
-								<li><a href="#">Edit Account</a></li>
-								<li role="separator" class="divider"></li>
-								<li><a href="#">Logout</a></li>
-							</ul>
-						</li>
-					</ul>
-				</div>
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+			<a class="navbar-brand" data-template="home"><img src="./images/pear-logo.png"></a>
+			<form class="navbar-form navbar-left" role="search">
+				<div class="form-group">
+					<input type="textbox" id="address" placeholder="Pick a location" class="form-control">
+				<button type="button" id="submit" class="btn btn-default fa fa-search"></button>
 			</div>
-		</nav>
+			</form>
+    </div>
+
+
+
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Profile</a></li>
+				<li><a href="#" data-template="register">Register</a></li>
+				<li><a href="#" data-template="login">Login</a></li>
+        <!-- <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+						<li><a href="#">My Account</a></li>
+						<li><a href="#">Edit Account</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="#">Logout</a></li>
+          </ul>
+        </li> -->
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 	</header>
 
 	<main></main>
+
+	<footer class="footer navbar-fixed-bottom">
+		<div class="container">
+			<ul class="ratingContainer">
+				<li>Quickie</li>
+				<li><input id="ratingSlider" type="text" data-slider-handle="custom"/></li>
+				<li>Flashy</li>
+			</ul>
+			<p>What mood are you going for?</p>
+		</div>
+	</footer>
 
 </body>
 </html>
