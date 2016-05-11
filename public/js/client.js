@@ -55,6 +55,8 @@ Pear.getTemplate = function(tpl, data){
     var parsedTemplate   = _.template(templateData);
     var compiledTemplate = parsedTemplate(data);
     $("main").html(compiledTemplate);
+		console.log($("#canvas-map"));
+		console.log(Pear.initMap);
 		if ($("#canvas-map").length > 0) Pear.initMap();
 		// check for token to display header contents
 		Pear.checkLoginState();
@@ -123,7 +125,7 @@ Pear.bindFormSubmits = function(){
 Pear.initialize = function() {
 	$("form").on("submit", this.submitForm);
 	$("#getUsers").on("click", this.getUsers);
-  
+
 }
 
 Pear.initialize = function(){
