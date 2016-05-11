@@ -3,13 +3,11 @@ var Pear = Pear || {};
 Pear.map;
 Pear.canvas;
 Pear.markers = [];
-Pear.defaultCenter = { 
-  lat: 51.506178, 
-  lng: -0.088369 
+Pear.defaultCenter = {
+  lat: 51.506178,
+  lng: -0.088369
 }
 Pear.venueTypes = [
-      "amusement_park",
-      "aquarium",
       "art_gallery",
       "bar",
       "bowling_alley",
@@ -20,20 +18,71 @@ Pear.venueTypes = [
       "night_club",
       "park",
       "parking",
-      "restaurant",
-      "zoo"
+      "restaurant"
 ]
 
 Pear.addInfoWindowForVenue = function(venue, marker){
-  var self = this;
+  // At this point in time, 'self' is the Pear object:
+  // var self = this;
+
+  // var var_infobox_props = {
+  //      content: contentString,
+  //      disableAutoPan: false,
+  //      maxWidth: 0,
+  //      pixelOffset: new google.maps.Size(-10, 0),
+  //      zIndex: null,
+  //      boxClass: "myInfobox",
+  //      closeBoxMargin: "2px",
+  //      closeBoxURL: "close_sm.png",
+  //      infoBoxClearance: new google.maps.Size(1, 1),
+  //      visible: true,
+  //      pane: "floatPane",
+  //      enableEventPropagation: false
+  //   };
+
   google.maps.event.addListener(marker, "click", function(){
+
+
+    // This is for the sliding side bar
+    	var $panel = $('#slide-panel');
+      $panel.empty();
+      $panel.append('<div id="iw-container">' +
+        '<div class="iw-title">'+venue.name+'</div>' +
+        '<div class="iw-subTitle">Image</div>' +
+        //'<p>'+venue.photos.html_attributions+'</p>' +
+        '<div class="iw-subTitle">Price</div>'+
+        '<p>'+venue.price_level+'</p>' +
+        '<div class="iw-subTitle"">Rating</div>' +
+        '<div class="iw-bottom-gradient">'+venue.rating+'</div>' +
+        '<div class="iw-subTitle">Opening Hours</div>'+
+        '<p>'+venue.opening_hours+'</p>' +
+        '</div>');
+
+
+    	if ($panel.hasClass("visible")) {
+    		$panel.removeClass('visible').animate({'margin-left':'-300px'});
+    	} else {
+    		$panel.addClass('visible').animate({'margin-left':'0px'});
+    	}
+    	return false;
+    });
     if (typeof self.infowindow != "undefined") self.infowindow.close();
     self.infowindow = new google.maps.InfoWindow({
       content: venue.name
     });
-
     self.infowindow.open(self.map, this);
-  })
+  //   if (typeof self.var_infobox != "undefined") self.var_infobox.close();
+  //   self.var_infobox = new google.maps.InfoWindow({
+  //     content: contentString
+  //   });
+  //
+  //   self.var_infobox.open(self.map, this);
+  // })
+
+  // var var_infobox = new InfoBox(var_infobox_props);
+  //
+  // var_infobox.open(self.map, marker)
+
 }
 
 Pear.getMarkerScore = function(types, price, rating) {
@@ -68,6 +117,7 @@ Pear.getMarkerScore = function(types, price, rating) {
 }
 
 Pear.createMarkerForVenue = function(venue, timeout) {
+  console.log("This is createMarkerForVenue")
   var self   = this;
   var latlng = new google.maps.LatLng(venue.geometry.location.lat, venue.geometry.location.lng);
   var image  = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|00D900";
@@ -76,19 +126,20 @@ Pear.createMarkerForVenue = function(venue, timeout) {
   var rating = venue.rating;
   var score  = this.getMarkerScore(types, price, rating);
 
+  var pin_red = './images/pin-red-solid-1.png';
+
   var marker = new google.maps.Marker({
     position: latlng,
     map: self.map,
-    icon: image,
+    icon: pin_red,
     types: types,
     price: price,
     rating: rating,
     score: score
   });
-  
-  Pear.markers.push(marker);
 
-  self.addInfoWindowForVenue(venue, marker);
+  Pear.markers.push(marker);
+  // self.addInfoWindowForVenue(venue, marker);
 }
 
 // Sets the map on all markers in the array.
@@ -115,15 +166,19 @@ Pear.deleteMarkers = function() {
 }
 
 Pear.loopThroughVenues = function(data){
-
+  // Pear.deleteMarkers();
+  console.log("loopThroughVenues after deleteMarkers")
   return $.each(data.results, function(i, venue) {
     Pear.createMarkerForVenue(venue, i*10);
   });
 }
 
 Pear.getVenues = function(lat, lng){
-  if (!lat || !lng ) return false;
-
+  // if (!lat || !lng ) return false;
+  if (!lat || !lng ) {
+    console.log("returns false in getVenues")
+    return false;
+  }
   var self = this;
 
   Pear.deleteMarkers();
@@ -156,6 +211,7 @@ Pear.geocodeAddress = function() {
       map: Pear.map,
       position: results[0].geometry.location
     });
+    marker.setMap(null)
 
     Pear.map.panTo(marker.position);
     Pear.map.setZoom(16);
@@ -168,18 +224,27 @@ Pear.setupGeocodeSearch = function() {
   submitButton.addEventListener('click', Pear.geocodeAddress);
 }
 
-Pear.initMap = function() { 
+Pear.initMap = function() {
   this.canvas = document.getElementById('canvas-map');
 
   this.map = new google.maps.Map(this.canvas, {
+    minZoom: 11,
     zoom: 14,
     center: Pear.defaultCenter,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
+    mapTypeControl: true,
+    // panControl:true,
+    // rotateControl:true,
+    // streetViewControl: true,
     styles: [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"road.arterial","stylers":[{"saturation":-100},{"lightness":30},{"visibility":"on"}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":-25},{"saturation":-100}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]}]
   });
 
   // Binds the submit function for the search
   this.setupGeocodeSearch();
+
+
+  this.addYourLocationButton(Pear.map, Pear.userMarker);
+
 
   // Get position sets up the mouseEvent when you drag the map
   this.populateMarkersOnDrag(this.map);

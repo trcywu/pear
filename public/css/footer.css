@@ -1,6 +1,11 @@
 .footer {
 	text-align: center;
-	background-color: #ef5350;
+	margin: 20px auto;
+	background: white;
+	padding: 10px;
+	border: 2px solid #D32F2F;
+	border-radius: 10px;
+	max-width: 320px;
 }
 
 .slider {
@@ -39,4 +44,8 @@
 
 .tooltip-arrow {
 	visibility: hidden;
+}
+
+.slider.slider-horizontal {
+	max-width: 175px;
 }
