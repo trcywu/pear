@@ -24,8 +24,9 @@ function register(req, res, next) {
 }
 
 function login(req, res, next) {
+	console.log(req.body)
 	User.findOne({
-		"local.email": req.body.email
+		"email": req.body.email
 	}, function(err, user) {
 		if (err) return res.status(500).json({ message: "Something went wrong" });
 		if (!user) return res.status(403).json({ message: "No user detected" });
