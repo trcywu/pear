@@ -1,0 +1,34 @@
+.footer {
+	text-align: center;
+	background-color: #ef5350;
+}
+
+.slider {
+	margin: 0 10px;
+}
+
+.ratingContainer {
+	list-style: none;
+	padding: 0;
+	margin: 5px 0;
+}
+
+.ratingContainer li {
+	display: inline-block;
+}
+
+.slider-selection {
+	background: #d32f2f;
+}
+
+.slider-track-high {
+	background: lightgrey;
+}
+
+.slider-handle.custom {
+	margin: 0 auto;
+	height: 30px;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	content: url("../images/pear-solo.png");
+}
