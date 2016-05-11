@@ -3,21 +3,28 @@ var Pear = Pear || {};
 Pear.map;
 Pear.canvas;
 Pear.markers = [];
-Pear.defaultCenter = { 
-  lat: 51.506178, 
-  lng: -0.088369 
+Pear.defaultCenter = {
+  lat: 51.506178,
+  lng: -0.088369
 }
 
 Pear.addInfoWindowForVenue = function(venue, marker){
   var self = this;
   google.maps.event.addListener(marker, "click", function(){
-    if (typeof self.infowindow != "undefined") self.infowindow.close();
-    self.infowindow = new google.maps.InfoWindow({
-      content: venue.name
+    // This is for the sliding side bar
+    	var panel = $('#slide-panel');
+    	if (panel.hasClass("visible")) {
+    		panel.removeClass('visible').animate({'margin-left':'-300px'});
+    	} else {
+    		panel.addClass('visible').animate({'margin-left':'0px'});
+    	}
+    	return false;
     });
-
-    self.infowindow.open(self.map, this);
-  })
+    // if (typeof self.infowindow != "undefined") self.infowindow.close();
+    // self.infowindow = new google.maps.InfoWindow({
+    //   content: venue.name
+    // });
+    // self.infowindow.open(self.map, this);
 }
 
 Pear.getMarkerScore = function(types, price, rating) {
@@ -69,7 +76,7 @@ Pear.createMarkerForVenue = function(venue, timeout) {
     rating: rating,
     score: score
   });
-  
+
   Pear.markers.push(marker);
   self.addInfoWindowForVenue(venue, marker);
 }
@@ -146,7 +153,7 @@ Pear.setupGeocodeSearch = function() {
   submitButton.addEventListener('click', Pear.geocodeAddress);
 }
 
-Pear.initMap = function() { 
+Pear.initMap = function() {
   this.canvas = document.getElementById('canvas-map');
 
   this.map = new google.maps.Map(this.canvas, {
