@@ -7,6 +7,22 @@ Pear.defaultCenter = {
   lat: 51.506178, 
   lng: -0.088369 
 }
+Pear.venueTypes = [
+      "amusement_park",
+      "aquarium",
+      "art_gallery",
+      "bar",
+      "bowling_alley",
+      "cafe",
+      "casino",
+      "movie_theater",
+      "museum",
+      "night_club",
+      "park",
+      "parking",
+      "restaurant",
+      "zoo"
+]
 
 Pear.addInfoWindowForVenue = function(venue, marker){
   var self = this;
@@ -109,10 +125,18 @@ Pear.getVenues = function(lat, lng){
   if (!lat || !lng ) return false;
 
   var self = this;
-  return $.ajax({
-    type: "GET",
-    url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=250&type=bar&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno"
-  }).done(self.loopThroughVenues)
+
+  $.each(Pear.venueTypes, function(i, venueType) {
+    return $.ajax({
+      type: "GET",
+      url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=500&type="+venueType+"&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno"
+    }).done(self.loopThroughVenues)
+  })
+
+  // return $.ajax({
+  //   type: "GET",
+  //   url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=250&type=bar&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno"
+  // }).done(self.loopThroughVenues)
 }
 
 Pear.populateMarkersOnDrag = function() {
