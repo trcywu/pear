@@ -47,18 +47,17 @@ Pear.addInfoWindowForVenue = function(venue, marker){
     	var $panel = $('#slide-panel');
       $panel.empty();
       $panel.append('<div id="iw-container">' +
-        '<div class="iw-title">'+venue.name+'</div>' +
-        '<div class="iw-subTitle">Image</div>' +
-        //'<p>'+venue.photos.html_attributions+'</p>' +
+        '<div class="iw-title"><h1>'+venue.name+'</div></h1>' +
+        '<div class="iw-image"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference='+venue.photos[0].photo_reference+'&sensor=false&key=AIzaSyAtQYsLy07B5CVO2lZmmM4a8KKchfnUTdg"</div>' +
         '<div class="iw-subTitle">Price</div>'+
         '<p>'+venue.price_level+'</p>' +
         '<div class="iw-subTitle"">Rating</div>' +
         '<div class="iw-bottom-gradient">'+venue.rating+'</div>' +
         '<div class="iw-subTitle">Opening Hours</div>'+
-        '<p>'+venue.opening_hours+'</p>' +
+        '<p>'+venue.opening_hours.open_now+'</p>' +
+        '<div class="iw-bottom-gradient">'+venue.types[0]+'</div>' +
         '</div>');
-
-
+        console.log(venue);
     	if ($panel.hasClass("visible")) {
     		$panel.removeClass('visible').animate({'margin-left':'-300px'});
     	} else {
