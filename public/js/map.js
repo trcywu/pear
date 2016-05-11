@@ -157,6 +157,7 @@ Pear.initMap = function() {
   this.canvas = document.getElementById('canvas-map');
 
   this.map = new google.maps.Map(this.canvas, {
+    minZoom: 11,
     zoom: 14,
     center: Pear.defaultCenter,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -165,6 +166,10 @@ Pear.initMap = function() {
 
   // Binds the submit function for the search
   this.setupGeocodeSearch();
+
+
+  this.addYourLocationButton(Pear.map, Pear.userMarker);
+
 
   // Get position sets up the mouseEvent when you drag the map
   this.populateMarkersOnDrag(this.map);
