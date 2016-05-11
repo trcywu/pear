@@ -8,6 +8,10 @@ Pear.setToken = function(token) {
 	return window.localStorage.setItem("token", token);
 }
 
+Pear.removeToken = function() {
+  return localStorage.clear();
+}
+
 Pear.saveTokenIfPresent = function(data) {
 	if (data.token) return this.setToken(data.token);
 	return false;
@@ -52,6 +56,8 @@ Pear.getTemplate = function(tpl, data){
     var compiledTemplate = parsedTemplate(data);
     $("main").html(compiledTemplate);
 		if ($("#canvas-map").length > 0) Pear.initMap();
+		// check for token to display header contents
+		Pear.checkLoginState();
   })
 }
 
@@ -76,10 +82,37 @@ Pear.formSubmit = function(){
   return Pear.ajaxRequest(method, url, data, tpl);
 }
 
+Pear.checkLoginState = function(){
+  if (Pear.getToken()) {
+    return Pear.loggedInState();
+  } else {
+    return Pear.loggedOutState();
+  }
+}
+
+Pear.loggedInState = function(){
+	$(".login-btn").hide()
+	$(".register-btn").hide()
+	$(".logout-btn").show()
+}
+
+Pear.loggedOutState = function(){
+	$(".login-btn").show()
+	$(".register-btn").show()
+	$(".logout-btn").hide()
+}
+
+Pear.logout = function(){
+  event.preventDefault();
+  Pear.removeToken();
+  return Pear.loggedOutState();
+}
+
 Pear.bindLinkClicks = function(){
   // Event delegation
   $("nav").on("click", "a", this.linkClick);
   $("main").on("click", "#getUsers", this.getUsers);
+	$(".logout-btn").on("click", Pear.logout);
 }
 
 Pear.bindFormSubmits = function(){
@@ -96,6 +129,7 @@ Pear.initialize = function(){
   this.bindLinkClicks();
   this.bindFormSubmits();
   this.setSlider();
+	this.checkLoginState();
 };
 
 $(function(){

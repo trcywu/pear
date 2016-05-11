@@ -9,3 +9,6 @@ html, body {
   margin: 0;
   padding: 0;
 }
+ .register-btn {
+   display: none;
+ }
