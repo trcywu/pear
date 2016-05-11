@@ -43,11 +43,11 @@ Pear.getMarkerScore = function(types, price, rating) {
   }
 
   if (!price && !rating) {
-    return score;
+    return Math.floor(score);
   } else if (!price || !rating) {
-    return score/2;
+    return Math.floor(score/2);
   } else {
-    return score/3;
+    return Math.floor(score/3);
   }
 }
 

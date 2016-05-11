@@ -96,7 +96,6 @@ Pear.initialize = function(){
   this.bindLinkClicks();
   this.bindFormSubmits();
   this.setSlider();
-  this.listenForSliderChange();
 };
 
 $(function(){

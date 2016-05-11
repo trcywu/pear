@@ -8,14 +8,16 @@ Pear.setSlider = function() {
 		min: 1,
 		max: 5
 	});
+
+	Pear.listenForSliderChange();
 }
 
 Pear.listenForSliderChange = function() {
-	$("#ratingSlider").on("slide", Pear.changeMapOnSlide());
+	$("#ratingSlider").on("change", Pear.changeMapOnSlide);
 }
 
 Pear.changeMapOnSlide = function() {
-	var sliderVal = $("#ratingSlider").getValue;
+	var sliderVal = $("#ratingSlider").slider("getValue");
 
 	$.each(Pear.markers, function(i, marker) {
 		if (marker.score !== sliderVal) {
