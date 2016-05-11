@@ -28,4 +28,3 @@ Pear.changeMapOnSlide = function() {
 	})
 
 }
-
