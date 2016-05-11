@@ -9,40 +9,70 @@ Pear.defaultCenter = {
 }
 
 Pear.addInfoWindowForVenue = function(venue, marker){
+  // At this point in time, 'self' is the Pear object:
   var self = this;
+  console.log("This is addInfoWindowForVenue")
+
+  var var_infobox_props = {
+       content: contentString,
+       disableAutoPan: false,
+       maxWidth: 0,
+       pixelOffset: new google.maps.Size(-10, 0),
+       zIndex: null,
+       boxClass: "myInfobox",
+       closeBoxMargin: "2px",
+       closeBoxURL: "close_sm.png",
+       infoBoxClearance: new google.maps.Size(1, 1),
+       visible: true,
+       pane: "floatPane",
+       enableEventPropagation: false
+    };
+
   var contentString = 
   '<div id="iw-container">' +
   '<div class="iw-title">'+venue.name+'</div>' +
-  '<div class="iw-subTitle">History</div>' +
-  '<p>'+venue.photos.html_attributions+'</p>' +
+  '<div class="iw-subTitle">Image</div>' +
+  //'<p>'+venue.photos.html_attributions+'</p>' +
   '<div class="iw-subTitle">Price</div>'+
   '<p>'+venue.price_level+'</p>' +
-  '<div class="iw-content">Rating</div>' +
+  '<div class="iw-subTitle"">Rating</div>' +
   '<div class="iw-bottom-gradient">'+venue.rating+'</div>' +
+  '<div class="iw-subTitle">Opening Hours</div>'+
+  '<p>'+venue.opening_hours+'</p>' +
   '</div>';
 
+  var var_infobox = new InfoBox(var_infobox_props);
+
   google.maps.event.addListener(marker, "click", function(){
-    if (typeof self.infowindow != "undefined") self.infowindow.close();
-    self.infowindow = new google.maps.InfoWindow({
+    if (typeof self.var_infobox != "undefined") self.var_infobox.close();
+    self.var_infobox = new google.maps.InfoWindow({
       content: contentString
     });
 
-    self.infowindow.open(self.map, this);
+    self.var_infobox.open(self.map, this);
   })
+
+  // var var_infobox = new InfoBox(var_infobox_props);
+  console.log(var_infobox)
+  var_infobox.open(self.map, marker)
 }
 
 Pear.createMarkerForVenue = function(venue, timeout) {
+  console.log("This is createMarkerForVenue")
   var self   = this;
   var latlng = new google.maps.LatLng(venue.geometry.location.lat, venue.geometry.location.lng);
   var image  = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|00D900";
 
+  var pin_red = './images/pin-red-solid-1.png';
+
   var marker = new google.maps.Marker({
     position: latlng,
     map: self.map,
-    icon: image
+    icon: pin_red
   })
   
   Pear.markers.push(marker);
+  console.log("Pear markers: ", Pear.markers)
   self.addInfoWindowForVenue(venue, marker);
 }
 
@@ -70,16 +100,21 @@ Pear.deleteMarkers = function() {
 }
 
 Pear.loopThroughVenues = function(data){
-  Pear.deleteMarkers();
+  console.log("loopThroughVenues before deleteMarkers")
 
+  Pear.deleteMarkers();
+  console.log("loopThroughVenues after deleteMarkers")
   return $.each(data.results, function(i, venue) {
     Pear.createMarkerForVenue(venue, i*10);
   })
 }
 
 Pear.getVenues = function(lat, lng){
-  if (!lat || !lng ) return false;
-
+  // if (!lat || !lng ) return false;
+  if (!lat || !lng ) {
+    console.log("returns false in getVenues")
+    return false;
+  }
   var self = this;
   return $.ajax({
     type: "GET",
@@ -106,6 +141,7 @@ Pear.geocodeAddress = function() {
       map: Pear.map,
       position: results[0].geometry.location
     });
+    marker.setMap(null)
 
     Pear.map.panTo(marker.position);
     Pear.map.setZoom(16);
@@ -125,6 +161,10 @@ Pear.initMap = function() {
     zoom: 14,
     center: Pear.defaultCenter,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
+    mapTypeControl: true,
+    panControl:true,
+    rotateControl:true,
+    streetViewControl: true,
     styles: [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"road.arterial","stylers":[{"saturation":-100},{"lightness":30},{"visibility":"on"}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":-25},{"saturation":-100}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]}]
   });
 
