@@ -114,7 +114,7 @@ Pear.deleteMarkers = function() {
 }
 
 Pear.loopThroughVenues = function(data){
-  Pear.deleteMarkers();
+  // Pear.deleteMarkers();
 
   return $.each(data.results, function(i, venue) {
     Pear.createMarkerForVenue(venue, i*10);
@@ -126,6 +126,8 @@ Pear.getVenues = function(lat, lng){
 
   var self = this;
 
+  Pear.deleteMarkers();
+
   $.each(Pear.venueTypes, function(i, venueType) {
     return $.ajax({
       type: "GET",
@@ -133,10 +135,6 @@ Pear.getVenues = function(lat, lng){
     }).done(self.loopThroughVenues)
   })
 
-  // return $.ajax({
-  //   type: "GET",
-  //   url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=250&type=bar&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno"
-  // }).done(self.loopThroughVenues)
 }
 
 Pear.populateMarkersOnDrag = function() {
