@@ -87,6 +87,7 @@ Pear.createMarkerForVenue = function(venue, timeout) {
   });
   
   Pear.markers.push(marker);
+
   self.addInfoWindowForVenue(venue, marker);
 }
 
@@ -114,11 +115,10 @@ Pear.deleteMarkers = function() {
 }
 
 Pear.loopThroughVenues = function(data){
-  // Pear.deleteMarkers();
 
   return $.each(data.results, function(i, venue) {
     Pear.createMarkerForVenue(venue, i*10);
-  })
+  });
 }
 
 Pear.getVenues = function(lat, lng){
