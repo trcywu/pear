@@ -20,16 +20,55 @@ Pear.addInfoWindowForVenue = function(venue, marker){
   })
 }
 
+Pear.getMarkerScore = function(types, price, rating) {
+  var score = 0;
+
+  if (price) {
+    if (price <= 2) {
+      score += price;
+    }
+    else {
+      score += (price + 1);
+    }
+  }
+
+  if (rating) { score += rating; }
+
+  if ($.inArray("night_club", types)) {
+    score += 1;
+  } else if ($.inArray("restaurant", types)) {
+    score += 5;
+  } else {
+    score += 3;
+  }
+
+  if (!price && !rating) {
+    return score;
+  } else if (!price || !rating) {
+    return score/2;
+  } else {
+    return score/3;
+  }
+}
+
 Pear.createMarkerForVenue = function(venue, timeout) {
   var self   = this;
   var latlng = new google.maps.LatLng(venue.geometry.location.lat, venue.geometry.location.lng);
   var image  = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|00D900";
+  var types  = venue.types;
+  var price  = venue.price_level;
+  var rating = venue.rating;
+  var score  = this.getMarkerScore(types, price, rating);
 
   var marker = new google.maps.Marker({
     position: latlng,
     map: self.map,
-    icon: image
-  })
+    icon: image,
+    types: types,
+    price: price,
+    rating: rating,
+    score: score
+  });
   
   Pear.markers.push(marker);
   self.addInfoWindowForVenue(venue, marker);
