@@ -55,8 +55,6 @@ Pear.getTemplate = function(tpl, data){
     var parsedTemplate   = _.template(templateData);
     var compiledTemplate = parsedTemplate(data);
     $("main").html(compiledTemplate);
-		console.log($("#canvas-map"));
-		console.log(Pear.initMap);
 		if ($("#canvas-map").length > 0) Pear.initMap();
 		// check for token to display header contents
 		Pear.checkLoginState();
