@@ -157,9 +157,8 @@ Pear.getMarkerScore = function(types, price, rating) {
         score = 5;
       }
       break;
-
-    return score;
-  } 
+  }
+  return score;
 }
 
 Pear.createMarkerForVenue = function(venue, timeout) {
