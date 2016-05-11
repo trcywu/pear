@@ -123,6 +123,7 @@ Pear.bindFormSubmits = function(){
 Pear.initialize = function() {
 	$("form").on("submit", this.submitForm);
 	$("#getUsers").on("click", this.getUsers);
+  
 }
 
 Pear.initialize = function(){
