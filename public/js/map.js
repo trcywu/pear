@@ -189,6 +189,7 @@ Pear.setMapOnAll = function(map) {
   for (var i = 0; i < Pear.markers.length; i++) {
     Pear.markers[i].setMap(map);
   }
+
 }
 
 // Shows any markers currently in the array.
@@ -229,7 +230,7 @@ Pear.getVenues = function(lat, lng){
       url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=500&type="+venueType+"&key=AIzaSyAtQYsLy07B5CVO2lZmmM4a8KKchfnUTdg"
     }).done(self.loopThroughVenues)
   })
-
+  Pear.resetSlider();
 }
 
 Pear.populateMarkersOnDrag = function() {

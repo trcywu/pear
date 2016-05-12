@@ -55,3 +55,8 @@ Pear.setTooltiptext = function() {
 			break;
 	}
 }
+
+Pear.resetSlider = function() {
+	$("#ratingSlider").slider("setValue", 3);
+	$(".moodQuestion").html("What mood are you going for?")
+}
