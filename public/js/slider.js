@@ -27,11 +27,21 @@ Pear.changeMapOnSlide = function() {
 
 	$.each(Pear.markers, function(i, marker) {
 		if (marker.score !== sliderVal) {
-			Pear.markers[i].setMap(null);
+			marker.setMap(null);
 		} else {
-			Pear.markers[i].setMap(Pear.map);
+			marker.setMap(Pear.map);
 		}
 	});
+
+	if (sliderVal === 1) {
+		$.each(Pear.clinicMarkers, function(i, marker) {
+			marker.setMap(Pear.map);
+		});
+	} else {
+		$.each(Pear.clinicMarkers, function(i, marker) {
+			marker.setMap(null);
+		});
+	}
 }
 
 Pear.setTooltiptext = function() {
