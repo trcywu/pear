@@ -12,6 +12,12 @@ a.navbar-brand {
   margin-top: 5px;
 }
 
+a.register-btn, a.login-btn, .nav>li>a {
+  height: 60px;
+  line-height: 60px;
+  padding: 0 10px;
+}
+
 .navbar-default .navbar-brand {
     color: #fff;
 }
@@ -85,3 +91,13 @@ a.navbar-brand img {
 /*button.fa.fa-search {
   background-color: none;
 }*/
+
+.fa-search:hover {
+  color: black;
+}
+
+.btn-default:active:hover, .btn-default:active, .btn-default:hover, .btn-default:focus {
+  background-color: #E30D93;
+  outline: 0 none;
+  box-shadow: none;
+}
