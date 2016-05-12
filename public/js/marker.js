@@ -84,8 +84,8 @@ Pear.getMarkerScore = function(types, price, rating) {
 Pear.createMarkerForClinic = function(clinic, timeout) {
   var self   = this;
   var latlng = new google.maps.LatLng(clinic.latitude, clinic.longitude);
-  var name   = clinic.organisation_name
-  var types  = "Clinic"
+  var name   = clinic.organisation_name;
+  var types  = "Clinic";
   var score  = 1;
   var icon   = "./images/map_markers/clinic_marker.png";
 
@@ -98,7 +98,7 @@ Pear.createMarkerForClinic = function(clinic, timeout) {
     animation: google.maps.Animation.DROP
   });
 
-  Pear.clincMarkers.push(clinic);
+  Pear.clinicMarkers.push(clinic);
 }
 
 
@@ -152,8 +152,7 @@ Pear.deleteMarkers = function() {
 }
 
 Pear.loopThroughClinics = function(data) {
-    // Pear.deleteMarkers();
-    return $.each(data.results, function(i, clinic) {
+    return $.each(data.result, function(i, clinic) {
         Pear.createMarkerForClinic(clinic, i * 10);
     });
 }
@@ -161,12 +160,14 @@ Pear.loopThroughClinics = function(data) {
 Pear.loopThroughVenues = function(data) {
     // Pear.deleteMarkers();
     return $.each(data.results, function(i, venue) {
+
         Pear.createMarkerForVenue(venue, i * 10);
     });
 }
 
 Pear.getClinics = function(lat, lng) {
   var self = this;
+  
   $.each(Pear.venueTypes, function(i, venueType) {
       return $.ajax({
           type: "GET",
