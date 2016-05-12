@@ -94,11 +94,12 @@ Pear.createMarkerForClinic = function(clinic, timeout) {
     map: self.map,
     icon: icon,
     types: types,
-    score: score,
-    animation: google.maps.Animation.DROP
+    score: score
   });
 
-  Pear.clinicMarkers.push(clinic);
+  marker.setMap(null);
+
+  Pear.clinicMarkers.push(marker);
 }
 
 
@@ -167,7 +168,7 @@ Pear.loopThroughVenues = function(data) {
 
 Pear.getClinics = function(lat, lng) {
   var self = this;
-  
+
   $.each(Pear.venueTypes, function(i, venueType) {
       return $.ajax({
           type: "GET",
