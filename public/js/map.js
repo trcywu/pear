@@ -198,15 +198,12 @@ Pear.clinicWindowContent = function(clinic, marker) {
       '<div><span class="clinic-address">'+ clinic.postcode +'</span></div><br>' +
       '<div><img src="http://www.alloverwellness.com/wp-content/uploads/2014/11/Shocked-Doctor-26695685_l.jpg" class="clinic-doc"></div>' +
       '</div>');
-      console.log(clinic);
 }
 
 Pear.addInfoWindowForClinics = function(clinic, marker) {
     google.maps.event.addListener(marker, "click", function() {
-
         var $panel = $("#slide-panel");
-        console.log(marker);
-        if ($panel.hasClass("visible") && $panel.html().indexOf(marker.name) !== -1) {
+        if ($panel.hasClass("visible") && $panel.html().indexOf(clinic.address1) !== -1) {
             Pear.clinicWindowContent(clinic, marker);
             $panel.removeClass('visible').animate({
                 'margin-left': '-300px'

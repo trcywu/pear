@@ -56,7 +56,7 @@ a.register-btn, a.login-btn, .nav>li>a {
 /*.navbar-form {
   box-shadow: none;
 }
-*/ 
+*/
 
 @media (max-width: 767px) {
   .navbar-collapse {
@@ -97,6 +97,10 @@ a.navbar-brand img {
    top: 50%;
    transform: translateY(35%);
  }
+
+ input#address.form-control {
+   width: 400px;
+ }
 }
 
 @media (max-width: 500px){
@@ -107,6 +111,10 @@ a.navbar-brand img {
   .navbar-form.navbar-left input[type="button"]{
     padding: 6px;
   }
+
+  input#address.form-control {
+    width: 120px;
+  }
 }
 
 /*button.fa.fa-search {
@@ -114,7 +122,8 @@ a.navbar-brand img {
   }*/
 
   .fa-search:hover {
-    color: black;
+    color: #fff;
+    font-weight: 600;
   }
 
   .btn-default:active:hover, .btn-default:active, .btn-default:hover, .btn-default:focus {

@@ -94,7 +94,8 @@ Pear.createMarkerForClinic = function(clinic, timeout) {
     map: self.map,
     icon: icon,
     types: types,
-    score: score
+    score: score,
+    name: name
   });
 
   marker.setMap(null);
