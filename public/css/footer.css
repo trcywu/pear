@@ -3,7 +3,7 @@
 	margin: 20px auto;
 	background: white;
 	padding: 10px;
-	border: 2px solid #D32F2F;
+	border: 2px solid #E30D93;
 	border-radius: 10px;
 	max-width: 320px;
 }
@@ -23,7 +23,7 @@
 }
 
 .slider-selection {
-	background: #d32f2f;
+	background: #E30D93;
 }
 
 .slider-track-high {
