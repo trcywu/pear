@@ -29,7 +29,6 @@ Pear.ajaxRequest = function(method, url, data, tpl) {
 		data: 			data,
 		beforeSend: this.setRequestHeader
 	}).done(function(data) {
-		console.log(data);
 		Pear.saveTokenIfPresent(data);
 		if (tpl) return Pear.getTemplate(tpl, data, url)
 	}).fail(function(data) {
@@ -40,7 +39,6 @@ Pear.ajaxRequest = function(method, url, data, tpl) {
 
 
 Pear.getUsers = function() {
-  console.log("Now this should console log!!!!")
 	return Pear.ajaxRequest("get", "/users");
 }
 
@@ -118,12 +116,6 @@ Pear.bindLinkClicks = function(){
 Pear.bindFormSubmits = function(){
   // Event delegation
   $("body").on("submit", "form", this.formSubmit);
-}
-
-Pear.initialize = function() {
-	$("form").on("submit", this.submitForm);
-	$("#getUsers").on("click", this.getUsers);
-
 }
 
 Pear.initialize = function(){

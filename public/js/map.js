@@ -194,13 +194,12 @@ Pear.createMarkerForVenue = function(venue, timeout) {
   var price  = venue.price_level;
   var rating = venue.rating;
   var score  = this.getMarkerScore(types, price, rating);
-
-  var pin_red = './images/pin-red-solid-1.png';
+  var icon   = "./images/map_markers/" + venue.types[0] + "_marker.png";
 
   var marker = new google.maps.Marker({
     position: latlng,
     map: self.map,
-    icon: pin_red,
+    icon: icon,
     types: types,
     price: price,
     rating: rating,
@@ -216,6 +215,7 @@ Pear.setMapOnAll = function(map) {
   for (var i = 0; i < Pear.markers.length; i++) {
     Pear.markers[i].setMap(map);
   }
+
 }
 
 // Shows any markers currently in the array.
@@ -256,7 +256,7 @@ Pear.getVenues = function(lat, lng){
       url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=500&type="+venueType+"&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno"
     }).done(self.loopThroughVenues)
   })
-
+  Pear.resetSlider();
 }
 
 Pear.populateMarkersOnDrag = function() {
