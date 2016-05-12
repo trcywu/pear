@@ -168,13 +168,12 @@ Pear.createMarkerForVenue = function(venue, timeout) {
   var price  = venue.price_level;
   var rating = venue.rating;
   var score  = this.getMarkerScore(types, price, rating);
-
-  var pin_red = './images/pin-red-solid-1.png';
+  var icon   = "./images/" + venue.types[0] + "_marker.png";
 
   var marker = new google.maps.Marker({
     position: latlng,
     map: self.map,
-    icon: pin_red,
+    icon: icon,
     types: types,
     price: price,
     rating: rating,
