@@ -39,16 +39,16 @@ Pear.setTooltiptext = function() {
 
 	switch(sliderVal) {
 		case 1:
-			$(".moodQuestion").html("Only one thing on your mind");
+			$(".moodQuestion").html("Only one thing on your mind!");
 			break;
 		case 2:
-			$(".moodQuestion").html("Text for 2");
+			$(".moodQuestion").html("Cheap and cheerful");
 			break;
 		case 3:
 			$(".moodQuestion").html("Just a casual date");
 			break;
 		case 4:
-			$(".moodQuestion").html("Text for 4");
+			$(".moodQuestion").html("Pushing the boat out");
 			break;
 		case 5:
 			$(".moodQuestion").html("Hey, big spender!");
