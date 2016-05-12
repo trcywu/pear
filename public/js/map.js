@@ -153,24 +153,6 @@ Pear.changeWindowContent = function(venue, marker) {
 }
 
 Pear.addInfoWindowForVenue = function(venue, marker) {
-    // At this point in time, 'self' is the Pear object:
-    // var self = this;
-
-    // var var_infobox_props = {
-    //      content: contentString,
-    //      disableAutoPan: false,
-    //      maxWidth: 0,
-    //      pixelOffset: new google.maps.Size(-10, 0),
-    //      zIndex: null,
-    //      boxClass: "myInfobox",
-    //      closeBoxMargin: "2px",
-    //      closeBoxURL: "close_sm.png",
-    //      infoBoxClearance: new google.maps.Size(1, 1),
-    //      visible: true,
-    //      pane: "floatPane",
-    //      enableEventPropagation: false
-    //   };
-
     google.maps.event.addListener(marker, "click", function() {
 
         var $panel = $("#slide-panel");
@@ -197,23 +179,55 @@ Pear.addInfoWindowForVenue = function(venue, marker) {
         }
         return false;
     });
+}
 
-    if ("photos" in venue) {
-        // console.log(venue.photos[0].photo_reference);
 
-    }
-    //   if (typeof self.var_infobox != "undefined") self.var_infobox.close();
-    //   self.var_infobox = new google.maps.InfoWindow({
-    //     content: contentString
-    //   });
-    //
-    //   self.var_infobox.open(self.map, this);
-    // })
+Pear.clinicWindowContent = function(clinic, marker) {
+  // This is for the sliding side bar
+  var $panel = $('#slide-panel');
 
-    // var var_infobox = new InfoBox(var_infobox_props);
-    //
-    // var_infobox.open(self.map, marker)
+  $panel.empty();
 
+  $panel.append('<div class="info-box">' +
+      "<div><h3>Well I suppose that's what you get for dating around..</h3></div>" +
+      '<div><span class="clinic-name"><strong>Your closest clinic is:</strong><br> '+ clinic.organisation_name +'</span></div>' +
+      '<div><span class="clinic-address">'+ clinic.address1 +'</span></div>' +
+      '<div><span class="clinic-address">'+ clinic.address2 +'</span></div>' +
+      '<div><span class="clinic-address">'+ clinic.address3 +'</span></div>' +
+      '<div><span class="clinic-address">'+ clinic.city +'</span></div>' +
+      '<div><span class="clinic-address">'+ clinic.postcode +'</span></div><br>' +
+      '<div><img src="http://www.alloverwellness.com/wp-content/uploads/2014/11/Shocked-Doctor-26695685_l.jpg" class="clinic-doc"></div>' +
+      '</div>');
+      console.log(clinic);
+}
+
+Pear.addInfoWindowForClinics = function(clinic, marker) {
+    google.maps.event.addListener(marker, "click", function() {
+
+        var $panel = $("#slide-panel");
+        console.log(marker);
+        if ($panel.hasClass("visible") && $panel.html().indexOf(marker.name) !== -1) {
+            Pear.clinicWindowContent(clinic, marker);
+            $panel.removeClass('visible').animate({
+                'margin-left': '-300px'
+            });
+        } else if ($panel.hasClass("visible")) {
+            $panel.removeClass("visible").animate({
+                "margin-left": "-300px"
+            }, null, null, function() {
+                Pear.clinicWindowContent(clinic, marker);
+                $panel.addClass("visible").animate({
+                    "margin-left": "0px"
+                });
+            });
+        } else {
+            Pear.clinicWindowContent(clinic, marker);
+            $panel.addClass('visible').animate({
+                'margin-left': '0px'
+            });
+        }
+        return false;
+    });
 }
 
 Pear.geocodeAddress = function() {

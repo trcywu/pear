@@ -100,6 +100,7 @@ Pear.createMarkerForClinic = function(clinic, timeout) {
   marker.setMap(null);
 
   Pear.clinicMarkers.push(marker);
+  self.addInfoWindowForClinics(clinic, marker);
 }
 
 
@@ -180,7 +181,6 @@ Pear.getClinics = function(lat, lng) {
 }
 
 Pear.getVenues = function(lat, lng) {
-    // if (!lat || !lng ) return false;
     if (!lat || !lng) {
         return false;
     }

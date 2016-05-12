@@ -85,6 +85,11 @@ i.fa {
   color: white;
 }
 
+.clinic-doc {
+  max-width: 200px;
+  max-height: 200px;
+}
+
 /* Grow */
 #hvr-grow {
   display: inline-block;
