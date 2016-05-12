@@ -47,19 +47,23 @@ Pear.addYourLocationButton = function(map, marker){
 		if(navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function(position) {
 				var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        var image = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|00D900";
+        var image  = "../images/map_markers/pear_marker.png";
+
         var marker = new google.maps.Marker({
           position: latlng,
-          map: this.initMap,
+          map: Pear.map,
           icon: image
         });
-        // Pear.setPosition(latlng);
+
         map.setCenter(latlng);
-        console.log(latlng);
+        map.setZoom(16);
 
 				clearInterval(animationInterval);
 				$('#you_location_img').css('background-position', '-144px 0px');
+
+				Pear.getVenues(position.coords.latitude, position.coords.longitude);
 			});
+			
 		}
 		else{
 			clearInterval(animationInterval);
