@@ -69,7 +69,7 @@ Pear.changeWindowContent = function(venue, marker) {
             var venueOpeningHours = "fa fa-times";
         }
     } else {
-        var venueOpeningHours = "?";
+        var venueOpeningHours = "fa fa-question";
     }
 
     if (venue.types[0]) {
@@ -86,15 +86,15 @@ Pear.changeWindowContent = function(venue, marker) {
     $panel.empty();
 
     $panel.append('<div class="info-box">' +
-            '<div><h1 class="venue-name">' + venueName + '</h1></div>' +
-            '<p><h3 class="venue-vicinity">' + venueAddress + '</h3></p>' +
+            '<div><h2 class="venue-name">' + venueName + '</h2></div>' +
+            '<p><h4 class="venue-vicinity">' + venueAddress + '</h4></p>' +
             '<div><img src=' + venueImage + ' class="venue-image"></div>' +
             '<p><span class="venue-rating">' + venueRating + '</span></p>' +
             // use div -col sm 6 per box using the bootstrap method to make these boxes instead.
-            '<p><div class="venue-price">' + venuePrice + '</div>' +
-            '<div class="venue-opening"><i class="' + venueOpeningHours + '"aria-hidden="true"></i></div></p>' +
-            '<p><div class="venue-category">' + venueType + '</div>' +
-            '<div class="venue-category">' + marker.score + '</div></p>' +
+            '<p><div class="venue-price">Price:<br> ' + venuePrice + '</div>' +
+            '<div class="venue-opening">Open:<br> <i class="' + venueOpeningHours + '"aria-hidden="true"></i></div></p>' +
+            '<p><div class="venue-category">Category:<br> ' + venueType + '</div>' +
+            '<div class="venue-category">Score:<br> ' + marker.score + '</div></p>' +
             '</div>');
 }
 
