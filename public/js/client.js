@@ -115,7 +115,17 @@ Pear.bindLinkClicks = function(){
 
 Pear.bindFormSubmits = function(){
   // Event delegation
+  $("body").on("submit", "form.login", this.hideModal);
+  $("body").on("submit", "form.register", this.hideModal);
   $("body").on("submit", "form", this.formSubmit);
+
+}
+
+Pear.hideModal = function(){
+  var parents = $(this).parent().parent().parent();
+  parents.hide();
+  $('.modal-backdrop.in').css('opacity', 0)
+  $('.modal-backdrop.fade.in').css({'z-index': -100});
 }
 
 Pear.initialize = function(){
