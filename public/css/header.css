@@ -1,6 +1,6 @@
 .navbar-default  {
   background-color: #E30D93;
-  border: 0 solid #ef5350;
+  border: 0 solid #E30D93;
   border-radius: 0;
   height: 60px;
   margin-bottom: 0;
@@ -21,7 +21,7 @@ a.navbar-brand {
 }
 
 .btn-default {
-  background-color: #ef5350;
+  background-color: #E30D93;
   border: none;
 }
 
