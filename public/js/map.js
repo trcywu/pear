@@ -8,17 +8,17 @@ Pear.defaultCenter = {
   lng: -0.088369
 }
 Pear.venueTypes = [
-      "art_gallery",
-      "bar",
-      "bowling_alley",
-      "cafe",
-      "casino",
-      "movie_theater",
-      "museum",
-      "night_club",
-      "park",
-      "parking",
-      "restaurant"
+      // "art_gallery",
+      "bar"
+      // "bowling_alley",
+      // "cafe",
+      // "casino",
+      // "movie_theater",
+      // "museum",
+      // "night_club",
+      // "park",
+      // "parking",
+      // "restaurant"
 ]
 
 Pear.addInfoWindowForVenue = function(venue, marker){
@@ -177,7 +177,8 @@ Pear.createMarkerForVenue = function(venue, timeout) {
     types: types,
     price: price,
     rating: rating,
-    score: score
+    score: score,
+    animation: google.maps.Animation.DROP
   });
 
   Pear.markers.push(marker);
