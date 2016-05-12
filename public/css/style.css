@@ -134,12 +134,17 @@ icon {
 
 @media (max-width: 768px) {
   #slide-panel {
-    height: 400px;
+    height: 420px;
     width: 200px;
   }
 
   .venue-price, .venue-opening, .venue-category {
     height: 40px;
     border: 0px solid white;
+  }
+
+  #slide-panel img {
+      max-width: 100px;
+      max-height: 100px;
   }
 }
