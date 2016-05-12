@@ -8,17 +8,17 @@ Pear.defaultCenter = {
     lng: -0.088369
 }
 Pear.venueTypes = [
-    // "art_gallery",
-    "bar",
-    // "bowling_alley",
-    // "cafe",
-    // "casino",
-    // "movie_theater",
-    // "museum",
-    // "night_club",
-    // "park",
-    // "parking",
-    // "restaurant"
+      // "art_gallery",
+      "bar"
+      // "bowling_alley",
+      // "cafe",
+      // "casino",
+      // "movie_theater",
+      // "museum",
+      // "night_club",
+      // "park",
+      // "parking",
+      // "restaurant"
 ]
 
 Pear.defaultCategoryImage = function(category){
@@ -220,6 +220,7 @@ Pear.getMarkerScore = function(types, price, rating) {
 }
 
 Pear.createMarkerForVenue = function(venue, timeout) {
+<<<<<<< HEAD
     var self = this;
     var latlng = new google.maps.LatLng(venue.geometry.location.lat, venue.geometry.location.lng);
     var image = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|00D900";
@@ -241,6 +242,30 @@ Pear.createMarkerForVenue = function(venue, timeout) {
 
     Pear.markers.push(marker);
     self.addInfoWindowForVenue(venue, marker);
+=======
+  var self   = this;
+  var latlng = new google.maps.LatLng(venue.geometry.location.lat, venue.geometry.location.lng);
+  var image  = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|00D900";
+  var types  = venue.types;
+  var price  = venue.price_level;
+  var rating = venue.rating;
+  var score  = this.getMarkerScore(types, price, rating);
+  var icon   = "./images/map_markers/" + venue.types[0] + "_marker.png";
+
+  var marker = new google.maps.Marker({
+    position: latlng,
+    map: self.map,
+    icon: icon,
+    types: types,
+    price: price,
+    rating: rating,
+    score: score,
+    animation: google.maps.Animation.DROP
+  });
+
+  Pear.markers.push(marker);
+  self.addInfoWindowForVenue(venue, marker);
+>>>>>>> development
 }
 
 // Sets the map on all markers in the array.
