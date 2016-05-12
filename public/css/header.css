@@ -12,6 +12,12 @@ a.navbar-brand {
   margin-top: 5px;
 }
 
+a.register-btn, a.login-btn, .nav>li>a {
+  height: 60px;
+  line-height: 60px;
+  padding: 0 10px;
+}
+
 .navbar-default .navbar-brand {
     color: #fff;
 }
