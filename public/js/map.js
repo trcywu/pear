@@ -8,18 +8,19 @@ Pear.defaultCenter = {
   lng: -0.088369
 }
 Pear.venueTypes = [
-      "art_gallery",
+      // "art_gallery",
       "bar",
-      "bowling_alley",
-      "cafe",
-      "casino",
-      "movie_theater",
-      "museum",
-      "night_club",
-      "park",
-      "parking",
-      "restaurant"
+      // "bowling_alley",
+      // "cafe",
+      // "casino",
+      // "movie_theater",
+      // "museum",
+      // "night_club",
+      // "park",
+      // "parking",
+      // "restaurant"
 ]
+
 
 Pear.addInfoWindowForVenue = function(venue, marker){
   // At this point in time, 'self' is the Pear object:
@@ -41,23 +42,44 @@ Pear.addInfoWindowForVenue = function(venue, marker){
   //   };
 
   google.maps.event.addListener(marker, "click", function(){
-
+    var venueImage;
+    var venueName = venue.name;
+    if ("photos" in venue) {
+    venueImage =
+     "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+venue.photos[0].photo_reference+"&sensor=false&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno";
+    console.log("There is a photo!")
+  } else {
+    venueImage = "http://esq.h-cdn.co/assets/cm/15/06/54d3cdbba4f40_-_esq-01-bar-lgn.jpg";
+    console.log("There ain't no photo here.")
+  }
+    if (venue.price_level) {
+    var venuePrice = venue.price_level;
+  } else {
+    var venuePrice = "Price not listed!";
+  }
+    var venueRating = venue.rating;
+    if (venue.opening_hours) {
+    var venueOpeningHours = venue.opening_hours.open_now;
+  } else {
+    var venueOpeningHours = "Not listed!";
+  }
+    if (venue.types[0]) {
+    var venueType = venue.types[0];
+  } else {
+    var venueType = venue.types;
+  }
 
     // This is for the sliding side bar
     	var $panel = $('#slide-panel');
       $panel.empty();
-      $panel.append('<div id="iw-container">' +
-        '<div class="iw-title"><h1>'+venue.name+'</div></h1>' +
-        '<div class="iw-image"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference='+venue.photos[0].photo_reference+'&sensor=false&key=AIzaSyAtQYsLy07B5CVO2lZmmM4a8KKchfnUTdg"</div>' +
-        '<div class="iw-subTitle">Price</div>'+
-        '<p>'+venue.price_level+'</p>' +
-        '<div class="iw-subTitle"">Rating</div>' +
-        '<div class="iw-bottom-gradient">'+venue.rating+'</div>' +
-        '<div class="iw-subTitle">Opening Hours</div>'+
-        '<p>'+venue.opening_hours.open_now+'</p>' +
-        '<div class="iw-bottom-gradient">'+venue.types[0]+'</div>' +
+      $panel.append('<div class="info-box">' +
+        '<div><h1 class="venue-name">'+venueName+'</div></h1>' +
+        '<div><img src='+venueImage+' class="venue-image"></div>' +
+        '<p><strong>Price:</strong> <span class="venue-price">'+venuePrice+'</span></p>' +
+        '<p><strong>Rating:</strong> <span class="venue-rating">'+venueRating+'</span></p>' +
+        '<p><strong>Opening Hours:</strong> <span class="venue-opening">'+venueOpeningHours+'</span></p>' +
+        '<p><strong>Category:</strong> <span class="venue-category">'+venueType+'</span></p>' +
         '</div>');
-        console.log(venue);
     	if ($panel.hasClass("visible")) {
     		$panel.removeClass('visible').animate({'margin-left':'-300px'});
     	} else {
@@ -65,7 +87,11 @@ Pear.addInfoWindowForVenue = function(venue, marker){
     	}
     	return false;
     });
-  //   if (typeof self.var_infobox != "undefined") self.var_infobox.close();
+    if ("photos" in venue){
+      console.log(venue.photos[0].photo_reference);
+
+    }
+    //   if (typeof self.var_infobox != "undefined") self.var_infobox.close();
   //   self.var_infobox = new google.maps.InfoWindow({
   //     content: contentString
   //   });
@@ -88,7 +114,7 @@ Pear.getMarkerScore = function(types, price, rating) {
         score = 5;
       } else {
         score = 4;
-      } 
+      }
       break;
     case "bar":
       if (price) {
@@ -227,7 +253,7 @@ Pear.getVenues = function(lat, lng){
   $.each(Pear.venueTypes, function(i, venueType) {
     return $.ajax({
       type: "GET",
-      url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=500&type="+venueType+"&key=AIzaSyAtQYsLy07B5CVO2lZmmM4a8KKchfnUTdg"
+      url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=500&type="+venueType+"&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno"
     }).done(self.loopThroughVenues)
   })
 

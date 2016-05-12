@@ -37,12 +37,12 @@ html, body {
     background-color: white;
     margin-left:-300px;
     position: relative;
-    border-right: 2px solid #D32F2F;
+    border-right: 3px solid #E30D93;
 }
 
 #slide-panel img {
-  width: 100px;
-  height: auto;
+    width: 250px;
+    height: auto;
 }
 
 /*#opener {
@@ -51,3 +51,12 @@ html, body {
     border-radius:0;
     position: relative;
 }*/
+
+.info-box {
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.venue-category {
+  text-transform: capitalize;
+}
