@@ -37,7 +37,7 @@ Pear.defaultCategoryImage = function(category){
     }
 }
 
-Pear.changeWindowContent = function() {
+Pear.changeWindowContent = function(venue, marker) {
     var venueImage;
     var venueName = venue.name;
     if ("photos" in venue) {
@@ -119,8 +119,8 @@ Pear.addInfoWindowForVenue = function(venue, marker) {
     google.maps.event.addListener(marker, "click", function() {
         var $panel = $("#slide-panel");
 
-        if ($panel.hasClass("visible") && $panel.html().indexOf(venueName)) {
-            Pear.changeWindowContent();
+        if ($panel.hasClass("visible") && $panel.html().indexOf(marker.name) !== -1) {
+            Pear.changeWindowContent(venue, marker);
             $panel.removeClass('visible').animate({
                 'margin-left': '-300px'
             });
@@ -128,13 +128,13 @@ Pear.addInfoWindowForVenue = function(venue, marker) {
             $panel.removeClass("visible").animate({
                 "margin-left": "-300px"
             }, null, null, function() {
-                Pear.changeWindowContent();
+                Pear.changeWindowContent(venue, marker);
                 $panel.addClass("visible").animate({
                     "margin-left": "0px"
                 });
             });
         } else {
-            Pear.changeWindowContent();
+            Pear.changeWindowContent(venue, marker);
             $panel.addClass('visible').animate({
                 'margin-left': '0px'
             });
@@ -248,6 +248,7 @@ Pear.createMarkerForVenue = function(venue, timeout) {
   var types  = venue.types;
   var price  = venue.price_level;
   var rating = venue.rating;
+  var name   = venue.name;
   var score  = this.getMarkerScore(types, price, rating);
   var icon   = "./images/map_markers/" + venue.types[0] + "_marker.png";
 
@@ -259,7 +260,8 @@ Pear.createMarkerForVenue = function(venue, timeout) {
     price: price,
     rating: rating,
     score: score,
-    animation: google.maps.Animation.DROP
+    animation: google.maps.Animation.DROP,
+    name: name
   });
 
   Pear.markers.push(marker);
