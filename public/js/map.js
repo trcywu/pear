@@ -38,6 +38,65 @@ Pear.defaultCategoryImage = function(category){
     }
 }
 
+Pear.changeWindowContent = function(venue, marker) {
+    var venueImage;
+    var venueName = venue.name;
+    if ("photos" in venue) {
+        venueImage =
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + venue.photos[0].photo_reference + "&sensor=false&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno";
+    } else {
+        // venueImage = "http://esq.h-cdn.co/assets/cm/15/06/54d3cdbba4f40_-_esq-01-bar-lgn.jpg";
+        // console.log("There ain't no photo here.")
+        venueImage = Pear.defaultCategoryImage(venue.types[0]);
+    }
+
+    if (venue.price_level) {
+        var venuePrice = venue.price_level;
+    } else {
+        var venuePrice = "?";
+    }
+
+    if (venue.rating) {
+        var venueRating = Pear.starRating(venue.rating);
+    } else {
+        var venueRating = "Not currently rated!"
+    }
+
+    if (venue.opening_hours) {
+        if (venue.opening_hours == 'true') {
+            var venueOpeningHours = "fa fa-check";
+        } else {
+            var venueOpeningHours = "fa fa-times";
+        }
+    } else {
+        var venueOpeningHours = "?";
+    }
+
+    if (venue.types[0]) {
+        var venueType = venue.types[0];
+    } else {
+        var venueType = venue.types;
+    }
+
+    var venueAddress = venue.vicinity;
+
+    // This is for the sliding side bar
+    var $panel = $('#slide-panel');
+
+    $panel.empty();
+
+    $panel.append('<div class="info-box">' +
+            '<div><h1 class="venue-name">' + venueName + '</h1></div>' +
+            '<p><h3 class="venue-vicinity">' + venueAddress + '</h3></p>' +
+            '<div><img src=' + venueImage + ' class="venue-image"></div>' +
+            '<p><span class="venue-rating">' + venueRating + '</span></p>' +
+            // use div -col sm 6 per box using the bootstrap method to make these boxes instead.
+            '<p><div class="venue-price">' + venuePrice + '</div>' +
+            '<div class="venue-opening"><i class="' + venueOpeningHours + '"aria-hidden="true"></i></div></p>' +
+            '<p><div class="venue-category">' + venueType + '</div>' +
+            '<div class="venue-category">' + marker.score + '</div></p>' +
+            '</div>');
+}
 
 Pear.addInfoWindowForVenue = function(venue, marker) {
     // At this point in time, 'self' is the Pear object:
@@ -59,68 +118,34 @@ Pear.addInfoWindowForVenue = function(venue, marker) {
     //   };
 
     google.maps.event.addListener(marker, "click", function() {
-        var venueImage;
-        var venueName = venue.name;
-        if ("photos" in venue) {
-            venueImage =
-                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + venue.photos[0].photo_reference + "&sensor=false&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno";
-        } else {
-            venueImage = Pear.defaultCategoryImage(venue.types[0]);
-        }
-        if (venue.price_level) {
-            var venuePrice = venue.price_level;
-        } else {
-            var venuePrice = "?";
-        }
-        if (venue.rating) {
-          var venueRating = Pear.starRating(venue.rating);
-        } else {
-          var venueRating = "Not currently rated!"
-        }
-        if (venue.opening_hours) {
-            if (venue.opening_hours == 'true') {
-                var venueOpeningHours = "fa fa-check";
-            } else {
-                var venueOpeningHours = "fa fa-times";
-            }
-        } else {
-            var venueOpeningHours = "?";
-        }
-        if (venue.types[0]) {
-            var venueType = venue.types[0];
-        } else {
-            var venueType = venue.types;
-        }
-        var venueAddress = venue.vicinity;
 
-        // This is for the sliding side bar
-        var $panel = $('#slide-panel');
-        $panel.empty();
-        $panel.append('<div class="info-box">' +
-            '<div><h1 class="venue-name">' + venueName + '</h1></div>' +
-            '<p><h3 class="venue-vicinity">' + venueAddress + '</h3></p>' +
-            '<div><img src=' + venueImage + ' class="venue-image"></div>' +
-            '<p><span class="venue-rating">' + venueRating + '</span></p>' +
-// use div -col sm 6 per box using the bootstrap method to make these boxes instead.
-            '<p><div class="venue-price">' + venuePrice + '</div>' +
-            '<div class="venue-opening"><i class="' + venueOpeningHours + '"aria-hidden="true"></i></div></p>' +
-            '<p><div class="venue-category">' + venueType + '</div>' +
-            '<div class="venue-category">' + marker.score + '</div></p>' +
-
-            '</div>');
-        if ($panel.hasClass("visible")) {
+        var $panel = $("#slide-panel");
+        console.log(marker);
+        if ($panel.hasClass("visible") && $panel.html().indexOf(marker.name) !== -1) {
+            Pear.changeWindowContent(venue, marker);
             $panel.removeClass('visible').animate({
                 'margin-left': '-300px'
             });
+        } else if ($panel.hasClass("visible")) {
+            $panel.removeClass("visible").animate({
+                "margin-left": "-300px"
+            }, null, null, function() {
+                Pear.changeWindowContent(venue, marker);
+                $panel.addClass("visible").animate({
+                    "margin-left": "0px"
+                });
+            });
         } else {
+            Pear.changeWindowContent(venue, marker);
             $panel.addClass('visible').animate({
                 'margin-left': '0px'
             });
         }
         return false;
     });
+
     if ("photos" in venue) {
-        console.log(venue.photos[0].photo_reference);
+        // console.log(venue.photos[0].photo_reference);
 
     }
     //   if (typeof self.var_infobox != "undefined") self.var_infobox.close();
@@ -136,8 +161,6 @@ Pear.addInfoWindowForVenue = function(venue, marker) {
     // var_infobox.open(self.map, marker)
 
 }
-
-
 
 Pear.geocodeAddress = function() {
     var geocoder = new google.maps.Geocoder();

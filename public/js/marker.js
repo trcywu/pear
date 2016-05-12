@@ -108,6 +108,7 @@ Pear.createMarkerForVenue = function(venue, timeout) {
   var types  = venue.types;
   var price  = venue.price_level;
   var rating = venue.rating;
+  var name   = venue.name;
   var score  = this.getMarkerScore(types, price, rating);
   var icon   = "./images/map_markers/" + venue.types[0] + "_marker.png";
 
@@ -116,6 +117,7 @@ Pear.createMarkerForVenue = function(venue, timeout) {
     map: self.map,
     icon: icon,
     types: types,
+    name: name,
     price: price,
     rating: rating,
     score: score,
