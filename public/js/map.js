@@ -196,10 +196,10 @@ Pear.initMap = function() {
         zoom: 14,
         center: Pear.defaultCenter,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        mapTypeControl: true,
+        mapTypeControl: false,
         // panControl:true,
         // rotateControl:true,
-        // streetViewControl: true,
+        streetViewControl: false,
         styles: [{
             "featureType": "landscape",
             "stylers": [{
