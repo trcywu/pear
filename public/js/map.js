@@ -137,13 +137,13 @@ Pear.changeWindowContent = function(venue, marker) {
 
     $panel.empty();
 
-    $panel.append('<div class="info-box">' +
+    $panel.append('<div class="info-box"><div class="venue-header">' +
         '<div><h3 class="venue-name">' + venueName + '</h3></div>' +
         '<p><h5 class="venue-vicinity">' + venueAddress + '</h5></p>' +
         '<div><img src=' + venueImage + ' class="venue-image"></div>' +
-        '<p><span class="venue-rating">' + venueRating + '</span></p>' +
+        '<p><span class="venue-rating">' + venueRating + '</span></p></div>' +
         // use div -col sm 6 per box using the bootstrap method to make these boxes instead.
-        '<div class="row">' +
+        '<div class="row venue-ratings">' +
         '<p><div class="venue-price col-6">Price:<br> <i class="' + venuePrice + '"aria-hidden="true"></i></div>' +
         '<div class="venue-opening col-6">Open:<br> <i class="' + venueOpeningHours + '"aria-hidden="true"></i></div></p>' +
         '</div><div class="row">' +
