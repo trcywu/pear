@@ -24,7 +24,7 @@
 }
 
 .slider-selection {
-	background: #E30D93;
+	background: #757575;
 }
 
 .slider-track-high {
@@ -33,10 +33,11 @@
 
 .slider-handle.custom {
 	margin: 0 auto;
-	height: 30px;
+	height: 25px;
+	width: auto;
 	box-shadow: none;
 	-webkit-box-shadow: none;
-	content: url("../images/pear-solo.png");
+	content: url("../images/pear-pink copy.png");
 }
 
 .tooltip-inner {

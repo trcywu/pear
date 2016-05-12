@@ -26,6 +26,11 @@ a.register-btn, a.login-btn, .nav>li>a {
     color: #fff;
 }
 
+.navbar-default .navbar-nav>li>a:hover {
+    color: #fff;
+    font-weight: 600;
+}
+
 .btn-default {
   background-color: #E30D93;
   border: none;

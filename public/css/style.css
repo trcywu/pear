@@ -2,7 +2,7 @@ html, body {
   margin: 0;
   overflow: hidden;
   font-family: 'Josefin Sans', sans-serif;
-  font-weight: bold;
+  font-weight: 400;
 }
 
 /*.Flexible-container {
@@ -45,9 +45,10 @@ html, body {
 }
 
 #slide-panel img {
-    width: 150px;
-    height: auto;
+    max-width: 150px;
+    max-height: 150px;
     border: 3px solid #000;
+    margin-bottom: 2px;
 }
 
 /*#opener {
@@ -65,8 +66,8 @@ html, body {
 .venue-opening,
 .venue-category {
   border: 3px solid black;
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
   display: inline-block;
   margin: 0 5px;
 }
@@ -77,6 +78,7 @@ html, body {
 
 i.fa {
   color: #E30D93;
+  font-size: 1.5em;
 }
 
 .btn-default {
