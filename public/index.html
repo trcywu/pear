@@ -7,50 +7,57 @@
 	<link rel="stylesheet" type="text/css" href="./vendor/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css">
 	<link rel="stylesheet" type="text/css" href="./css/style.css">
 	<link rel="stylesheet" type="text/css" href="./css/header.css">
-	<link rel="stylesheet" type="text/css" href="./css/footer.css">
-	<script type="text/javascript" src="./vendor/jquery/dist/jquery.js"></script>
-	<script type="text/javascript" src="./vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="./vendor/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
-	<script type="text/javascript" src="./vendor/underscore/underscore.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxM36DxD-TmmCuWMML0UXBVSirOUkF42Q" charset="utf-8"></script>
+  <link rel="stylesheet" type="text/css" href="./css/footer.css">
+  <script type="text/javascript" src="./vendor/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="./vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="./vendor/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
+  <script type="text/javascript" src="./vendor/underscore/underscore.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxM36DxD-TmmCuWMML0UXBVSirOUkF42Q" charset="utf-8"></script>
   <!-- <script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script> -->
-	<script src="https://use.fontawesome.com/f62c34798b.js"></script>
-	<script type="text/javascript" src="./js/client.js"></script>
-	<script type="text/javascript" src="./js/map.js"></script>
-	<script type="text/javascript" src="./js/slider.js"></script>
-	<script type="text/javascript" src="./js/location.js"></script>
+  <script src="https://use.fontawesome.com/f62c34798b.js"></script>
+  <script type="text/javascript" src="./js/client.js"></script>
+  <script type="text/javascript" src="./js/map.js"></script>
+  <script type="text/javascript" src="./js/slider.js"></script>
+  <script type="text/javascript" src="./js/location.js"></script>
 </head>
 
 <body>
 	<header>
 		<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-			<a class="navbar-brand" data-template="home"><img src="./images/pear-logo.png"></a>
-			<form class="navbar-form navbar-left" role="search">
-				<div class="form-group">
-					<input type="textbox" id="address" placeholder="Pick a location" class="form-control">
-				<button type="button" id="submit" class="btn btn-default fa fa-search"></button>
-			</div>
-			</form>
-    </div>
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand link" data-template="home"><img src="./images/pear-logo.png"></a>
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+             <input type="textbox" id="address" placeholder="Pick a location" class="form-control">
+             <button type="button" id="submit" class="btn btn-default fa fa-search"></button>
+           </div>
+         </form>
+       </div>
 
 
 
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Profile</a></li>
-				<li><a class="register-btn" data-template="register">Register</a></li>
-				<li><a class="login-btn" data-template="login">Login</a></li>
-				<li><a class="logout-btn" data-template="home">Logout</a></li>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Profile</a></li>
+          <li><a class="register-btn" data-template="register" data-toggle="modal" data-target="#register">Register</a></li>
+
+
+          <li><a class="login-btn" data-template="login" data-toggle="modal" data-target="#myModal">Login</a></li>
+
+          <!--   <li><button type="button" class="login-btn" data-toggle="modal" data-target=".bs-example-modal-sm" data-template="login">Login</button></li> -->
+
+
+
+          <li><a class="link logout-btn" data-template="home">Logout</a></li>
 
         <!-- <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
@@ -65,18 +72,106 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-	</header>
+<!-- register modal -->
+<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Register</h4>
+      </div>
+      <div class="modal-body">
+        <form class="register" method="post" action="/register" data-template="home">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" class="form-control" placeholder="Username">
+          </div>
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" name="firstName" id="firstName" class="form-control" placeholder="First name">
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Last name">
+          </div>
+          <div class="form-group">
+            <label for="image">Image</label>
+            <input type="text" name="image" id="image" class="form-control" placeholder="Image URL">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control" placeholder="Password">
+          </div>
+          <div class="form-group">
+            <label for="passwordConfirmation">Password</label>
+            <input type="password" name="passwordConfirmation" id="passwordConfirmation" class="form-control" placeholder="Confirm Password">
+          </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
 
-	<main></main>
+          <button id="getUsers">Get Users</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-	<footer class="footer navbar-fixed-bottom">
-		<ul class="ratingContainer">
-			<li>Quickie</li>
-			<li><input id="ratingSlider" type="text" data-slider-handle="custom"/></li>
-			<li>Flashy</li>
-		</ul>
-		<p class="moodQuestion">What mood are you going for?</p>
-	</footer>
+
+
+<!-- login modal -->
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Login</h4>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" class="form-control" id="email" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+        <button id="getToken">Get Token</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+<main> 
+</main>
+<footer class="footer navbar-fixed-bottom">
+  <ul class="ratingContainer">
+    <li>Quickie</li>
+    <li><input id="ratingSlider" type="text" data-slider-handle="custom"/></li>
+    <li>Flashy</li>
+  </ul>
+  <p class="moodQuestion">What mood are you going for?</p>
+</footer>
 </body>
 
 </html>

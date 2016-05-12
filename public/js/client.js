@@ -46,7 +46,7 @@ Pear.getUsers = function() {
 
 Pear.getTemplate = function(tpl, data){
   var templateUrl = "http://localhost:3000/templates/" + tpl + ".html";
-
+  (tpl === "home") ? $("footer").show() : $("footer").hide();
   $.ajax({
     url: templateUrl,
     method: "GET",
@@ -110,7 +110,7 @@ Pear.logout = function(){
 
 Pear.bindLinkClicks = function(){
   // Event delegation
-  $("nav").on("click", "a", this.linkClick);
+  $("nav").on("click", "a.link", this.linkClick);
   $("main").on("click", "#getUsers", this.getUsers);
 	$(".logout-btn").on("click", Pear.logout);
 }
