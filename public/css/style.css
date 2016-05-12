@@ -85,9 +85,9 @@ i.fa {
   color: white;
 }
 
-.clinic-doc {
-  max-width: 200px;
-  max-height: 200px;
+img.clinic-doc {
+  max-width: 300px;
+  max-height: auto;
 }
 
 /* Grow */
