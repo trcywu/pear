@@ -85,7 +85,7 @@ Pear.addInfoWindowForVenue = function(venue, marker) {
                 var venueOpeningHours = "fa fa-times";
             }
         } else {
-            var venueOpeningHours = "Opening hours not listed";
+            var venueOpeningHours = "?";
         }
         if (venue.types[0]) {
             var venueType = venue.types[0];
@@ -103,10 +103,10 @@ Pear.addInfoWindowForVenue = function(venue, marker) {
             '<div><img src=' + venueImage + ' class="venue-image"></div>' +
             '<p><span class="venue-rating">' + venueRating + '</span></p>' +
 // use div -col sm 6 per box using the bootstrap method to make these boxes instead.
-            '<p><span class="venue-price">' + venuePrice + '</span>' +
-            '<span class="venue-opening"><i class="' + venueOpeningHours + '"aria-hidden="true"></i></span></p>' +
-            '<p><span class="venue-category">' + venueType + '</span>' +
-            '<span class="venue-category">' + marker.score + '</span></p>' +
+            '<p><div class="venue-price">' + venuePrice + '</div>' +
+            '<div class="venue-opening"><i class="' + venueOpeningHours + '"aria-hidden="true"></i></div></p>' +
+            '<p><div class="venue-category">' + venueType + '</div>' +
+            '<div class="venue-category">' + marker.score + '</div></p>' +
 
             '</div>');
         if ($panel.hasClass("visible")) {
