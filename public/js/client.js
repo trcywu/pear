@@ -37,7 +37,6 @@ Pear.ajaxRequest = function(method, url, data, tpl) {
 	});
 }
 
-
 Pear.getUsers = function() {
 	return Pear.ajaxRequest("get", "/users");
 }
