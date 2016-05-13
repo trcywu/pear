@@ -137,13 +137,13 @@ Pear.changeWindowContent = function(venue, marker) {
 
     $panel.empty();
 
-    $panel.append('<div class="info-box">' +
+    $panel.append('<div class="info-box"><div class="venue-header">' +
         '<div><h3 class="venue-name">' + venueName + '</h3></div>' +
         '<p><h5 class="venue-vicinity">' + venueAddress + '</h5></p>' +
         '<div><img src=' + venueImage + ' class="venue-image"></div>' +
-        '<p><span class="venue-rating">' + venueRating + '</span></p>' +
+        '<p><span class="venue-rating">' + venueRating + '</span></p></div>' +
         // use div -col sm 6 per box using the bootstrap method to make these boxes instead.
-        '<div class="row">' +
+        '<div class="row venue-ratings">' +
         '<p><div class="venue-price col-6">Price:<br> <i class="' + venuePrice + '"aria-hidden="true"></i></div>' +
         '<div class="venue-opening col-6">Open:<br> <i class="' + venueOpeningHours + '"aria-hidden="true"></i></div></p>' +
         '</div><div class="row">' +
@@ -153,24 +153,6 @@ Pear.changeWindowContent = function(venue, marker) {
 }
 
 Pear.addInfoWindowForVenue = function(venue, marker) {
-    // At this point in time, 'self' is the Pear object:
-    // var self = this;
-
-    // var var_infobox_props = {
-    //      content: contentString,
-    //      disableAutoPan: false,
-    //      maxWidth: 0,
-    //      pixelOffset: new google.maps.Size(-10, 0),
-    //      zIndex: null,
-    //      boxClass: "myInfobox",
-    //      closeBoxMargin: "2px",
-    //      closeBoxURL: "close_sm.png",
-    //      infoBoxClearance: new google.maps.Size(1, 1),
-    //      visible: true,
-    //      pane: "floatPane",
-    //      enableEventPropagation: false
-    //   };
-
     google.maps.event.addListener(marker, "click", function() {
 
         var $panel = $("#slide-panel");
@@ -197,23 +179,52 @@ Pear.addInfoWindowForVenue = function(venue, marker) {
         }
         return false;
     });
+}
 
-    if ("photos" in venue) {
-        // console.log(venue.photos[0].photo_reference);
 
-    }
-    //   if (typeof self.var_infobox != "undefined") self.var_infobox.close();
-    //   self.var_infobox = new google.maps.InfoWindow({
-    //     content: contentString
-    //   });
-    //
-    //   self.var_infobox.open(self.map, this);
-    // })
+Pear.clinicWindowContent = function(clinic, marker) {
+  // This is for the sliding side bar
+  var $panel = $('#slide-panel');
 
-    // var var_infobox = new InfoBox(var_infobox_props);
-    //
-    // var_infobox.open(self.map, marker)
+  $panel.empty();
 
+  $panel.append('<div class="info-box">' +
+      "<div><h3>Well I suppose that's what you get for dating around..</h3></div>" +
+      '<div><img src="http://www.alloverwellness.com/wp-content/uploads/2014/11/Shocked-Doctor-26695685_l.jpg" class="clinic-doc"></div>' +
+      '<div><span class="clinic-name"><strong>Your closest clinic is:</strong><br> '+ clinic.organisation_name +'</span></div>' +
+      '<div><span class="clinic-address">'+ clinic.address1 +'</span></div>' +
+      '<div><span class="clinic-address">'+ clinic.address2 +'</span></div>' +
+      '<div><span class="clinic-address">'+ clinic.address3 +'</span></div>' +
+      '<div><span class="clinic-address">'+ clinic.city +'</span></div>' +
+      '<div><span class="clinic-address">'+ clinic.postcode +'</span></div><br>' +
+      '</div>');
+}
+
+Pear.addInfoWindowForClinics = function(clinic, marker) {
+    google.maps.event.addListener(marker, "click", function() {
+        var $panel = $("#slide-panel");
+        if ($panel.hasClass("visible") && $panel.html().indexOf(clinic.address1) !== -1) {
+            Pear.clinicWindowContent(clinic, marker);
+            $panel.removeClass('visible').animate({
+                'margin-left': '-300px'
+            });
+        } else if ($panel.hasClass("visible")) {
+            $panel.removeClass("visible").animate({
+                "margin-left": "-300px"
+            }, null, null, function() {
+                Pear.clinicWindowContent(clinic, marker);
+                $panel.addClass("visible").animate({
+                    "margin-left": "0px"
+                });
+            });
+        } else {
+            Pear.clinicWindowContent(clinic, marker);
+            $panel.addClass('visible').animate({
+                'margin-left': '0px'
+            });
+        }
+        return false;
+    });
 }
 
 Pear.geocodeAddress = function() {
