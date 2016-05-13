@@ -184,10 +184,15 @@ Pear.getVenues = function(lat, lng) {
     $.each(Pear.venueTypes, function(i, venueType) {
         return $.ajax({
             type: "GET",
-            url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lng + "&radius=500&type=" + venueType + "&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno"
+            url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lng + "&radius=500&type=" + venueType + "&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno",
+            beforeSend: Pear.setCorsHeader
         }).done(self.loopThroughVenues)
     })
     Pear.resetSlider();
+}
+
+Pear.setCorsHeader = function() {
+  xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
 }
 
 Pear.populateMarkersOnDrag = function() {
