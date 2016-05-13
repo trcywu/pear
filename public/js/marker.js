@@ -191,7 +191,7 @@ Pear.getVenues = function(lat, lng) {
     Pear.resetSlider();
 }
 
-Pear.setCorsHeader = function() {
+Pear.setCorsHeader = function(xhr) {
   xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
 }
 
