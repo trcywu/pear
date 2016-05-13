@@ -23,6 +23,7 @@ Pear.setRequestHeader = function(xhr, settings) {
 }
 
 Pear.ajaxRequest = function(method, url, data, tpl) {
+  console.log(this.APP_URL);
 	return $.ajax({
 		method: 		method,
 		url: 				this.APP_URL + url,
@@ -137,7 +138,7 @@ Pear.initialize = function(){
 };
 
 Pear.setUrl = function(){
-  if (window.location.href.indexOf("localhost") !== -1) return this.APP_URL = "localhost:3000";
+  if (window.location.href.indexOf("localhost") >= 0) return this.APP_URL = "localhost:3000";
   return this.APP_URL = "http://pearapp.herokuapp.com";
 }
 
