@@ -13,7 +13,7 @@ var routes					= require("./config/routes");
 
 var app							= express();
 
-app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
+app.use(favicon(__dirname + "/public/favicon.ico"));
 
 // Database
 mongoose.connect(config.database);
