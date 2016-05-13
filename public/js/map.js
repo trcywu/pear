@@ -10,17 +10,17 @@ Pear.defaultCenter = {
 }
 
 Pear.venueTypes = [
-    // "art_gallery",
-    "bar"
-    // "bowling_alley",
-    // "cafe",
-    // "casino",
-    // "movie_theater",
-    // "museum",
-    // "night_club",
-    // "park",
-    // "parking",
-    // "restaurant"
+    "art_gallery",
+    "bar",
+    "bowling_alley",
+    "cafe",
+    "casino",
+    "movie_theater",
+    "museum",
+    "night_club",
+    "park",
+    "parking",
+    "restaurant"
 ]
 
 Pear.geocodeAddress = function() {

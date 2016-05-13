@@ -168,7 +168,7 @@ Pear.clinicWindowContent = function(clinic, marker) {
 
   $panel.append('<div class="info-box">' +
   	"<div><h3>Well I suppose that's what you get for dating around..</h3></div>" +
-  	'<div><img src="https://www.alloverwellness.com/wp-content/uploads/2014/11/Shocked-Doctor-26695685_l.jpg" class="clinic-doc"></div>' +
+  	'<div><img src="./images/default_slider_images/shocked_doc.jpg" class="clinic-doc"></div>' +
   	'<div><span class="clinic-name"><strong>Your closest clinic is:</strong><br> '+ clinic.organisation_name +'</span></div>' +
   	'<div><span class="clinic-address">'+ clinic.address1 +'</span></div>' +
   	'<div><span class="clinic-address">'+ clinic.address2 +'</span></div>' +
