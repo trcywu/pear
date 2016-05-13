@@ -8,6 +8,7 @@ Pear.defaultCenter = {
     lat: 51.506178,
     lng: -0.088369
 }
+
 Pear.venueTypes = [
     // "art_gallery",
     "bar"
@@ -35,6 +36,7 @@ Pear.geocodeAddress = function() {
             map: Pear.map,
             position: results[0].geometry.location
         });
+
         marker.setMap(null)
 
         Pear.map.panTo(marker.position);
@@ -141,13 +143,10 @@ Pear.initMap = function() {
     // Binds the submit function for the search
     this.setupGeocodeSearch();
 
-
     this.addYourLocationButton(Pear.map, Pear.userMarker);
-
 
     // Get position sets up the mouseEvent when you drag the map
     this.populateMarkersOnDrag(this.map);
 
     Pear.getClinics();
-
 }
