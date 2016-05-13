@@ -105,6 +105,10 @@ icon {
   transform: scale(1.1);
 }
 
+a:hover {
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   #slide-panel {
     height: 420px;
@@ -121,3 +125,4 @@ icon {
       max-height: 100px;
   }
 }
+
