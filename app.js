@@ -1,5 +1,6 @@
 var config					= require("./config/config");
 var express					= require("express");
+var favicon 				= require("serve-favicon");
 var morgan					= require("morgan");
 var methodOverride	= require("method-override");
 var bodyParser			= require("body-parser");
@@ -11,6 +12,8 @@ var cors						= require("cors");
 var routes					= require("./config/routes");
 
 var app							= express();
+
+app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
 // Database
 mongoose.connect(config.database);
