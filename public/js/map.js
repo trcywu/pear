@@ -23,30 +23,8 @@ Pear.venueTypes = [
 ]
 
 Pear.defaultCategoryImage = function(category) {
-    switch (category) {
-        case "bar":
-            return "http://esq.h-cdn.co/assets/cm/15/06/54d3cdbba4f40_-_esq-01-bar-lgn.jpg";
-        case "restaurant":
-            return "http://www.jungfrau.ch/fileadmin/apps/orte/images/358-alpstube.jpg";
-        case "park":
-            return "https://zainabmarnie.files.wordpress.com/2013/03/park-at-night_00450891.jpg";
-        case "art_gallery":
-            return "http://www.tylershields.com/images/gallery/art_gallery.jpg";
-        case "bowling_alley":
-            return "http://bowling-alleys.regionaldirectory.us/bowling-alley-720.jpg";
-        case "cafe":
-            return "http://thetravelingstory.com/wp-content/uploads/2015/11/seniman-coffe.jpg";
-        case "casino":
-            return "http://static.designmynight.com/uploads/2014/01/GrosvenorCasino2-optimised.jpg";
-        case "movie_theater":
-            return "http://www.phoenix.org.uk/content/uploads/2014/04/Silver-screenings-1.jpg";
-        case "museum":
-            return "http://www.britishmuseum.org/images/new_waddesdon_gallery_944x531.jpg";
-        case "night_club":
-            return "http://cdn.londonandpartners.com/asset/53f2c1b95a0bb4af0f509dae4c405106.jpg";
-        case "parking":
-            return "https://c1.staticflickr.com/3/2754/4457664301_69e4ee6b7d_z.jpg?zz=1";
-    }
+    var image = "./images/default_slider_images/" + category + "_default.jpg";
+    return image;
 }
 
 Pear.categoryIcon = function(category) {
@@ -84,8 +62,6 @@ Pear.changeWindowContent = function(venue, marker) {
         venueImage =
             "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + venue.photos[0].photo_reference + "&sensor=false&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno";
     } else {
-        // venueImage = "http://esq.h-cdn.co/assets/cm/15/06/54d3cdbba4f40_-_esq-01-bar-lgn.jpg";
-        // console.log("There ain't no photo here.")
         venueImage = Pear.defaultCategoryImage(venue.types[0]);
     }
 
@@ -156,7 +132,6 @@ Pear.addInfoWindowForVenue = function(venue, marker) {
     google.maps.event.addListener(marker, "click", function() {
 
         var $panel = $("#slide-panel");
-        console.log(marker);
         if ($panel.hasClass("visible") && $panel.html().indexOf(marker.name) !== -1) {
             Pear.changeWindowContent(venue, marker);
             $panel.removeClass('visible').animate({
