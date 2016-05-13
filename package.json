@@ -6,6 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "example",
+    "heroku"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/trcywu/wdi-project-3.git"
@@ -30,5 +34,8 @@
     "passport-local": "^1.0.0",
     "serve-favicon": "^2.3.0",
     "validator": "^5.2.0"
-  }
+  },
+  "engines": {
+    "node": "v5.8.0"
+  } 
 }

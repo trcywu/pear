@@ -25,7 +25,7 @@ Pear.setRequestHeader = function(xhr, settings) {
 Pear.ajaxRequest = function(method, url, data, tpl) {
 	return $.ajax({
 		method: 		method,
-		url: 				"http://localhost:3000/api" + url,
+		url: 				this.APP_URL + url,
 		data: 			data,
 		beforeSend: this.setRequestHeader
 	}).done(function(data) {
@@ -42,7 +42,7 @@ Pear.getUsers = function() {
 }
 
 Pear.getTemplate = function(tpl, data){
-  var templateUrl = "http://localhost:3000/templates/" + tpl + ".html";
+  var templateUrl = Pear.APP_URL + "/templates/" + tpl + ".html";
   (tpl === "home") ? $("footer").show() : $("footer").hide();
   $.ajax({
     url: templateUrl,
@@ -128,12 +128,18 @@ Pear.hideModal = function(){
 }
 
 Pear.initialize = function(){
+  this.setUrl();
   this.bindLinkClicks();
   this.bindFormSubmits();
   this.setSlider();
 	this.checkLoginState();
   this.getTemplate("home", null);
 };
+
+Pear.setUrl = function(){
+  if (window.location.href.indexOf("localhost") !== -1) return this.APP_URL = "localhost:3000";
+  return this.APP_URL = "http://pearapp.herokuapp.com";
+}
 
 $(function(){
 	Pear.initialize();
