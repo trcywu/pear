@@ -138,7 +138,7 @@ Pear.initialize = function(){
 };
 
 Pear.setUrl = function(){
-  if (window.location.href.indexOf("localhost") >= 0) return this.APP_URL = "localhost:3000";
+  if (window.location.href.indexOf("localhost") >= 0) return this.APP_URL = "http://localhost:3000";
   return this.APP_URL = "https://pearapp.herokuapp.com";
 }
 
