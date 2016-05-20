@@ -124,7 +124,7 @@ Pear.createMarkerForVenue = function(venue, timeout) {
         price: price,
         rating: rating,
         score: score,
-        animation: google.maps.Animation.DROP
+        // animation: google.maps.Animation.DROP
     });
 
     Pear.markers.push(marker);
@@ -182,15 +182,13 @@ Pear.getVenues = function(lat, lng) {
     Pear.deleteMarkers();
 
     $.each(Pear.venueTypes, function(i, venueType) {
-        // return $.ajax({
-        //     type: "GET",
-        //     url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lng + "&radius=500&type=" + venueType + "&key=AIzaSyAtQYsLy07B5CVO2lZmmM4a8KKchfnUTdg",
-        // }).done(self.loopThroughVenues)
         var location = {
             lat: lat,
             lng: lng
         }
-        Pear.performSearch(location, venueType);
+        setTimeout(function(){
+          Pear.performSearch(location, venueType);
+        }, i * 200);
     });
     Pear.resetSlider();
 };
@@ -199,14 +197,14 @@ Pear.performSearch = function(location, keyword) {
     service = new google.maps.places.PlacesService(Pear.map);
     service.nearbySearch({
         location: location,
-        radius: 500,
+        radius: 2000,
         type: [keyword]
     }, Pear.callback);
 };
 
 Pear.callback = function(results, status) {
     if (status !== google.maps.places.PlacesServiceStatus.OK) {
-        console.error(status);
+        // console.error(status);
         return;
     }
     Pear.loopThroughVenues(results);
