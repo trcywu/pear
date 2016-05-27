@@ -3,7 +3,7 @@ var Pear = Pear || {};
 Pear.defaultCategoryImage = function(category) {
 	var image = "./images/default_slider_images/" + category + "_default.jpg";
 	return image;
-}
+};
 
 Pear.categoryIcon = function(category) {
 	switch (category) {
@@ -30,88 +30,92 @@ Pear.categoryIcon = function(category) {
 		case "parking":
 		return "fa fa-car";
 	}
-}
+};
 
 Pear.starRating = function(rating) {
-	var fullStar = "<i class='fa fa-star'></i>"
+	var fullStar = "<i class='fa fa-star'></i>";
 	var halfStar = "<i class='fa fa-star-half-o'></i>";
-	var emptyStar = "<i class='fa fa-star-o'></i>"
+	var emptyStar = "<i class='fa fa-star-o'></i>";
 
 	var output = [];
 
 	var numberOfFullStars = Math.floor(rating);
 
 	for (i = 0; i < numberOfFullStars; i++) {
-		output.push(fullStar)
+		output.push(fullStar);
 	}
 
 	if (rating % 1 != 0) {
-		output.push(halfStar)
+		output.push(halfStar);
 	}
 
-	var numberofEmptyStars = (5 - output.length)
+	var numberofEmptyStars = (5 - output.length);
 
 	for (i = 0; i < numberofEmptyStars; i++) {
-		output.push(emptyStar)
+		output.push(emptyStar);
 	}
 
 	var stars = output.join(" ");
 	return stars;
-}
+};
 
 Pear.changeWindowContent = function(venue, marker) {
 	var venueImage;
 	var venueAddress = venue.vicinity;
 	var venueName = venue.name;
+	var venuePrice;
+	var venueRating;
+	var venueOpeningHours;
+	var venueType;
+	var markerScore;
 
 	if ("photos" in venue) {
-		venueImage =
-		"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + venue.photos[0].photo_reference + "&sensor=false&key=AIzaSyCg9HSSgl7ERpRyl2AxSHZgrwAUoqXWUno";
+		venueImage = venue.photos[0].getUrl({'maxWidth': 400, 'maxHeight': 400});
 	} else {
 		venueImage = Pear.defaultCategoryImage(venue.types[0]);
 	}
 
 	if (venue.price_level) {
-		var venuePrice = venue.price_level;
+		// venuePrice = venue.price_level;
 		venuePrice = "fa fa-usd";
 	} else {
-		var venuePrice = "fa fa-question";
+		venuePrice = "fa fa-question";
 	}
 
 	if (venue.rating) {
-		var venueRating = Pear.starRating(venue.rating);
+		venueRating = Pear.starRating(venue.rating);
 	} else {
-		var venueRating = "Not currently rated!"
+		venueRating = "Not currently rated!";
 	}
 
 	if (venue.opening_hours) {
 		if (venue.opening_hours.open_now) {
-			var venueOpeningHours = "fa fa-check";
+			venueOpeningHours = "fa fa-check";
 		} else {
-			var venueOpeningHours = "fa fa-times";
+			venueOpeningHours = "fa fa-times";
 		}
 	} else {
-		var venueOpeningHours = "fa fa-question";
+		venueOpeningHours = "fa fa-question";
 	}
 
 	if (venue.types[0]) {
-		var venueType = venue.types[0];
+		venueType = venue.types[0];
 		venueType = Pear.categoryIcon(venue.types[0]);
 	} else {
-		var venueType = venue.types;
+		venueType = venue.types;
 		venueType = Pear.categoryIcon(venue.types);
 	}
 
 	if (marker.score == 1) {
-		var markerScore = "fa fa-hand-peace-o"
+		markerScore = "fa fa-hand-peace-o";
 	} else if (marker.score == 2) {
-		var markerScore = "fa fa-hand-spock-o"
+		markerScore = "fa fa-hand-spock-o";
 	} else if (marker.score == 3) {
-		var markerScore = "fa fa-hand-rock-o"
+		markerScore = "fa fa-hand-rock-o";
 	} else if (marker.score == 4) {
-		var markerScore = "fa fa-thumbs-o-up"
+		markerScore = "fa fa-thumbs-o-up";
 	} else {
-		var markerScore = "fa fa-hand-o-up"
+		markerScore = "fa fa-hand-o-up";
 	}
 
     // This is for the sliding side bar
@@ -131,12 +135,12 @@ Pear.changeWindowContent = function(venue, marker) {
     '<p><div class="venue-category col-6">Category:<br> <i class="' + venueType + '"aria-hidden="true"></i></div>' +
     '<div class="venue-category col-6">Mood:<br> <i class="' + markerScore + '"aria-hidden="true"></i></div></p>' +
     '</div></div>');
-}
+};
 
 Pear.addInfoWindowForVenue = function(venue, marker) {
 	google.maps.event.addListener(marker, "click", function() {
 		var $panel = $("#slide-panel");
-		
+
 		if ($panel.hasClass("visible") && $panel.html().indexOf(marker.name) !== -1) {
 			Pear.changeWindowContent(venue, marker);
 			$panel.removeClass('visible').animate({
@@ -159,7 +163,7 @@ Pear.addInfoWindowForVenue = function(venue, marker) {
 		}
 		return false;
 	});
-}
+};
 
 Pear.clinicWindowContent = function(clinic, marker) {
   var $panel = $('#slide-panel');
@@ -176,7 +180,7 @@ Pear.clinicWindowContent = function(clinic, marker) {
   	'<div><span class="clinic-address">'+ clinic.city +'</span></div>' +
   	'<div><span class="clinic-address">'+ clinic.postcode +'</span></div><br>' +
   	'</div>');
-}
+};
 
 Pear.addInfoWindowForClinics = function(clinic, marker) {
 	google.maps.event.addListener(marker, "click", function() {
@@ -203,4 +207,4 @@ Pear.addInfoWindowForClinics = function(clinic, marker) {
 		}
 		return false;
 	});
-}
+};

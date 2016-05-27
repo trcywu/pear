@@ -79,7 +79,7 @@ Pear.getMarkerScore = function(types, price, rating) {
             break;
     }
     return score;
-}
+};
 
 Pear.createMarkerForClinic = function(clinic, timeout) {
     var self = this;
@@ -102,7 +102,7 @@ Pear.createMarkerForClinic = function(clinic, timeout) {
 
     Pear.clinicMarkers.push(marker);
     self.addInfoWindowForClinics(clinic, marker);
-}
+};
 
 
 Pear.createMarkerForVenue = function(venue, timeout) {
@@ -123,44 +123,44 @@ Pear.createMarkerForVenue = function(venue, timeout) {
         name: name,
         price: price,
         rating: rating,
-        score: score,
+        score: score
         // animation: google.maps.Animation.DROP
     });
 
     Pear.markers.push(marker);
     self.addInfoWindowForVenue(venue, marker);
-}
+};
 
 Pear.setMapOnAll = function(map) {
     for (var i = 0; i < Pear.markers.length; i++) {
         Pear.markers[i].setMap(map);
     }
-}
+};
 
 Pear.showMarkers = function() {
     Pear.setMapOnAll(Pear.map);
-}
+};
 
 Pear.clearMarkers = function() {
     Pear.setMapOnAll(null);
-}
+};
 
 Pear.deleteMarkers = function() {
     Pear.clearMarkers();
     Pear.markers = [];
-}
+};
 
 Pear.loopThroughClinics = function(data) {
     return $.each(data.result, function(i, clinic) {
         Pear.createMarkerForClinic(clinic, i * 10);
     });
-}
+};
 
 Pear.loopThroughVenues = function(results) {
     return $.each(results, function(i, venue) {
         Pear.createMarkerForVenue(venue, i * 10);
     });
-}
+};
 
 Pear.getClinics = function(lat, lng) {
     var self = this;
@@ -169,9 +169,9 @@ Pear.getClinics = function(lat, lng) {
         return $.ajax({
             type: "GET",
             url: "https://data.gov.uk/data/api/service/health/clinics?city=London"
-        }).done(self.loopThroughClinics)
-    })
-}
+        }).done(self.loopThroughClinics);
+    });
+};
 
 Pear.getVenues = function(lat, lng) {
     if (!lat || !lng) {
@@ -185,7 +185,7 @@ Pear.getVenues = function(lat, lng) {
         var location = {
             lat: lat,
             lng: lng
-        }
+        };
         setTimeout(function(){
           Pear.performSearch(location, venueType);
         }, i * 200);
@@ -194,7 +194,7 @@ Pear.getVenues = function(lat, lng) {
 };
 
 Pear.performSearch = function(location, keyword) {
-    service = new google.maps.places.PlacesService(Pear.map);
+    var service = new google.maps.places.PlacesService(Pear.map);
     service.nearbySearch({
         location: location,
         radius: 2000,
@@ -216,4 +216,4 @@ Pear.populateMarkersOnDrag = function() {
         var currentLng = Pear.map.getCenter().lng();
         Pear.getVenues(currentLat, currentLng);
     });
-}
+};
